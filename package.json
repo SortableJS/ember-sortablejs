@@ -21,7 +21,9 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "^7.1.2"
+    "ember-cli-babel": "^7.1.2",
+    "sortablejs": "^1.8.4",
+    "ember-auto-import": "^1.2.21"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
