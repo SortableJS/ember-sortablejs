@@ -1,7 +1,25 @@
 <div class="container-flued">
   <div class="row">
     <div class="col">
-      <SortableJs @options={{hash animation=150 ghostClass="ghost-class"}}>
+      <h2>Simple list</h2>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <SortableJs
+        @options={{hash animation=150 ghostClass="ghost-class"}}
+        @onChoose={{action "trigger" "onChoose"}}
+        @onUnchoose={{action "trigger" "onUnchoose"}}
+        @onStart={{action "trigger" "onStart"}}
+        @onEnd={{action "trigger" "onEnd"}}
+        @onAdd={{action "trigger" "onAdd"}}
+        @onUpdate={{action "trigger" "onUpdate"}}
+        @onRemove={{action "trigger" "onRemove"}}
+        @onMove={{action "trigger" "onMove"}}
+        @onClone={{action "trigger" "onClone"}}
+        @onChange={{action "trigger" "onChange"}}
+      >
         <ul class="list-group">
           <li class="list-group-item">Item 1</li>
           <li class="list-group-item">Item 2</li>
@@ -14,7 +32,9 @@
     <div class="col">
       <pre>
         <code>
-          &lt;SortableJs @options=&#123;&#123;hash animation=150 ghostClass="ghost-class"&#125;&#125;&gt;
+          &lt;SortableJs
+            @options=&#123;&#123;hash animation=150 ghostClass="ghost-class"&#125;&#125;
+          &gt;
             &lt;ul class="list-group"&gt;
               &lt;li class="list-group-item">Item 1&lt;/li&gt;
               &lt;li class="list-group-item">Item 2&lt;/li&gt;
@@ -27,7 +47,86 @@
       </pre>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col">
+      <h2>Shared list</h2>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <SortableJs
+        @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
+        @onChoose={{action "trigger" "onChoose"}}
+        @onUnchoose={{action "trigger" "onUnchoose"}}
+        @onStart={{action "trigger" "onStart"}}
+        @onEnd={{action "trigger" "onEnd"}}
+        @onAdd={{action "trigger" "onAdd"}}
+        @onUpdate={{action "trigger" "onUpdate"}}
+        @onRemove={{action "trigger" "onRemove"}}
+        @onMove={{action "trigger" "onMove"}}
+        @onClone={{action "trigger" "onClone"}}
+        @onChange={{action "trigger" "onChange"}}
+      >
+        <ul class="list-group">
+          <li class="list-group-item">Item 1</li>
+          <li class="list-group-item">Item 2</li>
+          <li class="list-group-item">Item 3</li>
+          <li class="list-group-item">Item 4</li>
+          <li class="list-group-item">Item 5</li>
+        </ul>
+      </SortableJs>
+    </div>
+    <div class="col">
+      <SortableJs
+        @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
+        @onChoose={{action "trigger" "onChoose"}}
+        @onUnchoose={{action "trigger" "onUnchoose"}}
+        @onStart={{action "trigger" "onStart"}}
+        @onEnd={{action "trigger" "onEnd"}}
+        @onAdd={{action "trigger" "onAdd"}}
+        @onUpdate={{action "trigger" "onUpdate"}}
+        @onRemove={{action "trigger" "onRemove"}}
+        @onMove={{action "trigger" "onMove"}}
+        @onClone={{action "trigger" "onClone"}}
+        @onChange={{action "trigger" "onChange"}}
+      >
+        <ul class="list-group">
+          <li class="list-group-item bg-yellow">Item 1</li>
+          <li class="list-group-item bg-yellow">Item 2</li>
+          <li class="list-group-item bg-yellow">Item 3</li>
+          <li class="list-group-item bg-yellow">Item 4</li>
+          <li class="list-group-item bg-yellow">Item 5</li>
+        </ul>
+      </SortableJs>
+    </div>
+    <div class="col">
+      <pre>
+        <code>
+          &lt;SortableJs
+            @options=&#123;&#123;hash animation=150 ghostClass="ghost-class" group="shared-list"&#125;&#125;
+          &gt;
+            &lt;ul class="list-group"&gt;
+              &lt;li class="list-group-item">Item 1&lt;/li&gt;
+              &lt;li class="list-group-item">Item 2&lt;/li&gt;
+              &lt;li class="list-group-item">Item 3&lt;/li&gt;
+              &lt;li class="list-group-item">Item 4&lt;/li&gt;
+              &lt;li class="list-group-item">Item 5&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/SortableJs&gt;
+        </code>
+      </pre>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <div class="fixed-bottom">
+    Action Fired:
+    <ul>
+      {{#each this.actionStack as |item|}}
+        <li>{{item}}</li>
+      {{/each}}
+    </ul>
+  </div>
 </div>
-
-
-{{outlet}}

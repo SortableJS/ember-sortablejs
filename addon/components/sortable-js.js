@@ -10,9 +10,8 @@ export default Component.extend({
 
   classNames: ['ember-sortable-js'],
 
-  // 'onSetData',
-  // 'scrollFn',
   options: null,
+
   events: freeze([
     'onChoose',
     'onUnchoose',
@@ -25,6 +24,8 @@ export default Component.extend({
     'onMove',
     'onClone',
     'onChange',
+    'scrollFn',
+    'onSetData',
   ]),
 
   didInsertElement() {
@@ -39,11 +40,16 @@ export default Component.extend({
   },
 
   setupEventHandlers() {
-    this.events.forEach(eventName => this.sortable.option(eventName, bind(this, 'performExternalAction', eventName)));
+    this.events.forEach(eventName => {
+      const action = this[eventName];
+      if (typeof action === 'function') {
+        this.sortable.option(eventName, bind(this, 'performExternalAction', eventName));
+      }
+    });
   },
 
   performExternalAction(actionName, ...args) {
-    const action = this[this.events[actionName]];
+    const action = this[actionName];
 
     if (typeof action === 'function') {
       action(...args);

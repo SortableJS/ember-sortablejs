@@ -2,3 +2,11 @@
   background-color: #e04e39;
   color: #fff;
 }
+
+.bg-yellow {
+  background-color: rgb(253, 255, 143);
+}
+
+.shared-list li {
+  width: 100%
+}

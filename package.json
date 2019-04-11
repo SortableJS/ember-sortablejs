@@ -1,13 +1,20 @@
 {
   "name": "ember-sortablejs",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.1.0",
+  "description": "EmberJs wrapper for SortableJS",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember",
+    "ember-cli",
+    "sortable",
+    "sortablejs",
+    "drag",
+    "drop",
+    "drag and drop"
   ],
-  "repository": "",
+  "repository": "https://github.com/lvegerano/ember-sortablejs",
   "license": "MIT",
-  "author": "",
+  "author": "Luis Vegerano",
   "directories": {
     "doc": "doc",
     "test": "tests"
