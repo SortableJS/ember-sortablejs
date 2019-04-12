@@ -39,6 +39,11 @@ export default Component.extend({
     this.setupEventHandlers();
   },
 
+  willDestroyElement() {
+    this.sortable.destroy();
+    this._super(...arguments);
+  },
+
   setupEventHandlers() {
     this.events.forEach(eventName => {
       const action = this[eventName];
