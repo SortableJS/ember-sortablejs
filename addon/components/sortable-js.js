@@ -26,6 +26,8 @@ export default Component.extend({
     'onChange',
     'scrollFn',
     'onSetData',
+    'setData',
+    'onFilter',
   ]),
 
   didInsertElement() {
@@ -54,7 +56,9 @@ export default Component.extend({
   },
 
   performExternalAction(actionName, ...args) {
-    const action = this[actionName];
+    let action = this[actionName];
+
+    action = (action === 'onSetData') ? 'setData' : action;
 
     if (typeof action === 'function') {
       action(...args);
