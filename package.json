@@ -1,7 +1,7 @@
 {
   "name": "ember-sortablejs",
   "version": "1.2.0",
-  "description": "EmberJs wrapper for SortableJS",
+  "description": "EmberJS wrapper for SortableJS",
   "keywords": [
     "ember-addon",
     "ember",
@@ -12,7 +12,7 @@
     "drop",
     "drag and drop"
   ],
-  "repository": "https://github.com/lvegerano/ember-sortablejs",
+  "repository": "https://github.com/SortableJS/ember-sortablejs",
   "license": "MIT",
   "author": "Luis Vegerano",
   "directories": {
@@ -24,7 +24,7 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
-    "test": "ember test",
+    "test": "ember serve",
     "test:all": "ember try:each"
   },
   "dependencies": {
@@ -36,9 +36,9 @@
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
     "broccoli-asset-rev": "^2.7.0",
+    "drag-mock": "^1.4.0",
     "ember-cli": "~3.9.0",
     "ember-cli-dependency-checker": "^3.1.0",
-    "ember-cli-eslint": "^4.2.3",
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-sri": "^2.1.1",
