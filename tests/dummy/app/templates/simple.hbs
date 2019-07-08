@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col">
+    <h2>Simple list</h2>
+    <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <SortableJs
+      @options={{hash animation=150 ghostClass="ghost-class"}}
+      @onChoose={{action "onChoose"}}
+      @onUnchoose={{action "onUnchoose"}}
+      @onStart={{action "onStart"}}
+      @onEnd={{action "onEnd"}}
+      @onAdd={{action "onAdd"}}
+      @onUpdate={{action "onUpdate"}}
+      @onRemove={{action "onRemove"}}
+      @onMove={{action "onMove"}}
+      @onClone={{action "onClone"}}
+      @onChange={{action "onChange"}}
+    >
+      <ul class="list-group">
+        <li data-testid="one" class="list-group-item">Item 1</li>
+        <li data-testid="two" class="list-group-item">Item 2</li>
+        <li data-testid="three" class="list-group-item">Item 3</li>
+        <li data-testid="four" class="list-group-item">Item 4</li>
+        <li data-testid="five" class="list-group-item">Item 5</li>
+      </ul>
+    </SortableJs>
+  </div>
+  <div class="col">
+    <pre>
+      <code>
+        &lt;SortableJs
+          @options=&#123;&#123;hash animation=150 ghostClass="ghost-class"&#125;&#125;
+        &gt;
+          &lt;ul class="list-group"&gt;
+            &lt;li class="list-group-item">Item 1&lt;/li&gt;
+            &lt;li class="list-group-item">Item 2&lt;/li&gt;
+            &lt;li class="list-group-item">Item 3&lt;/li&gt;
+            &lt;li class="list-group-item">Item 4&lt;/li&gt;
+            &lt;li class="list-group-item">Item 5&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/SortableJs&gt;
+      </code>
+    </pre>
+  </div>
+</div>

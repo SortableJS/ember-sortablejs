@@ -8,23 +8,33 @@ module('Integration | Component | sortable-js', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
+    assert.expect(3)
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
     // await render(hbs`{{sortable-js}}`);
     // assert.equal(this.element.textContent.trim(), '');
 
     const onChoose = () => assert.ok(true, 'onChosse was called');
-    const unChoose = () => assert.ok(true, 'unChosse was called');
+    const onStart = () => assert.ok(true, 'onStart was called');
+    const onMove = () => assert.ok(true, 'onMove was called');
+    // const onEnd = () => assert.ok(true, 'onEnd was called');
+    const onUnchoose = () => assert.ok(true, 'unChosse was called');
+
 
     this.set('onChoose', onChoose);
-    this.set('unChoose', unChoose);
+    this.set('onStart', onStart);
+    this.set('onMove', onMove);
+    this.set('onUnchoose', onUnchoose);
+    // this.set('onEnd', onEnd);
 
     // Template block usage:
     await render(hbs`
       <SortableJs
         @options={{hash animation=150 ghostClass="ghost-class"}}
         @onChoose={{action onChoose}}
-        @unChoose={{action unChoose}}
+        @onStart={{action onStart}}
+        @onMove={{action onMove}}
+        @onUnchoose={{action onUnchoose}}
       >
         <ul class="list-group">
           <li data-testid="one" class="list-group-item">Item 1</li>
@@ -41,7 +51,7 @@ module('Integration | Component | sortable-js', function(hooks) {
      * @type HTMLElement
      */
     const elToBeDragged = find('li[data-testid="one"]');
-    const targetEl = find('li[data-testid="two"]');
+    const targetEl = find('li[data-testid="four"]');
 
     simulateDrag(elToBeDragged, targetEl);
 
