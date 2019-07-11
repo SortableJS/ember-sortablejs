@@ -1,17 +1,20 @@
-import hasEmberVersion from "ember-test-helpers/has-ember-version";
+function getPositionAtCenter(element) {
+  const {top, left, width, height} = element.getBoundingClientRect();
+  return {
+    x: left + width / 2,
+    y: top + height / 2
+  };
+}
 
-function createEvent (eventName, options, location) {
+function getDistanceBetweenElements(a, b) {
+ const aPosition = getPositionAtCenter(a);
+ const bPosition = getPositionAtCenter(b);
+
+ return Math.hypot(aPosition.x - bPosition.x, aPosition.y - bPosition.y);
+}
+
+function createEvent (eventName, options) {
   let event = {};
-  // event.initCustomEvent(eventName, true, true, null);
-
-  // event.view = window;
-  // event.detail = 0;
-  // event.ctlrKey = false;
-  // event.altKey = false;
-  // event.shiftKey = false;
-  // event.metaKey = false;
-  // event.button = 0;
-  // event.relatedTarget = null;
   event.cancelable = true;
   event.bubbles = true;
 
@@ -26,11 +29,6 @@ function createEvent (eventName, options, location) {
       delete options.y;
   }
 
-  /* copy the rest of the options into
-  the event object */
-  // for (const prop in options) {
-  //     event[prop] = options[prop];
-  // }
   event = Object.assign(event, options)
 
   switch (true) {
@@ -47,16 +45,20 @@ function createEvent (eventName, options, location) {
 }
 
 /**
- *
+ * @public
  * @param {HTMLElement} sourceElement - Element to be dragged
  * @param {HTMLElement} targetElement - Element where source element is being dropped
+ * @returns {Promise}
  */
-export function simulateDrag (sourceElement, targetElement) {
+export async function simulateDrag (sourceElement, targetElement) {
 
   /* get the coordinates of both elements, note that
   left refers to X, and top to Y */
   const sourceCoordinates = sourceElement.getBoundingClientRect();
   const targetCoordinates = targetElement.getBoundingClientRect();
+
+  const distance = getDistanceBetweenElements(sourceElement, targetElement);
+  console.log('distance', distance);
 
   /* simulate a mouse down event on the coordinates
   of the source element */
@@ -82,6 +84,8 @@ export function simulateDrag (sourceElement, targetElement) {
 
   sourceElement.dispatchEvent(dragStartEvent);
 
+  await new Promise((resolve) => setTimeout(() => resolve(), 1000));
+
   /* simulate a drag event on the source element */
   const dragEvent = createEvent(
       "drag",
@@ -98,7 +102,7 @@ export function simulateDrag (sourceElement, targetElement) {
       "dragenter",
       {
           x: targetCoordinates.left,
-          y: targetCoordinates.top,
+          y: sourceCoordinates.top + distance,
           dataTransfer: dragStartEvent.dataTransfer
       }
   );
@@ -110,7 +114,7 @@ export function simulateDrag (sourceElement, targetElement) {
       "dragover",
       {
           x: targetCoordinates.left,
-          y: targetCoordinates.top,
+          y: sourceCoordinates.top + distance,
           dataTransfer: dragStartEvent.dataTransfer
       }
   );
@@ -122,7 +126,7 @@ export function simulateDrag (sourceElement, targetElement) {
       "drop",
       {
           x: targetCoordinates.left,
-          y: targetCoordinates.top,
+          y: sourceCoordinates.top + distance,
           dataTransfer: dragStartEvent.dataTransfer
       }
   );
@@ -134,7 +138,7 @@ export function simulateDrag (sourceElement, targetElement) {
       "dragend",
       {
           x: targetCoordinates.left,
-          y: targetCoordinates.top,
+          y: sourceCoordinates.top + distance,
           dataTransfer: dragStartEvent.dataTransfer
       }
   );
@@ -146,7 +150,7 @@ export function simulateDrag (sourceElement, targetElement) {
       "mouseup",
       {
           x: targetCoordinates.left,
-          y: targetCoordinates.top
+          y: sourceCoordinates.top + distance
       }
   );
 
