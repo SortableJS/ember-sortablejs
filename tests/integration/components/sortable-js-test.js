@@ -7,25 +7,20 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Component | sortable-js', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    assert.expect(3)
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-    // await render(hbs`{{sortable-js}}`);
-    // assert.equal(this.element.textContent.trim(), '');
-
+  test('it reorders a list', async function(assert) {
+    const done = assert.async();
     const onChoose = () => assert.ok(true, 'onChosse was called');
     const onStart = () => assert.ok(true, 'onStart was called');
     const onMove = () => assert.ok(true, 'onMove was called');
-    // const onEnd = () => assert.ok(true, 'onEnd was called');
-    const onUnchoose = () => assert.ok(true, 'unChosse was called');
-
+    const onEnd = () => {
+      assert.ok(true, 'onEnd was called');
+      done();
+    }
 
     this.set('onChoose', onChoose);
     this.set('onStart', onStart);
     this.set('onMove', onMove);
-    this.set('onUnchoose', onUnchoose);
-    // this.set('onEnd', onEnd);
+    this.set('onEnd', onEnd);
 
     // Template block usage:
     await render(hbs`
@@ -34,7 +29,7 @@ module('Integration | Component | sortable-js', function(hooks) {
         @onChoose={{action onChoose}}
         @onStart={{action onStart}}
         @onMove={{action onMove}}
-        @onUnchoose={{action onUnchoose}}
+        @onEnd={{action onEnd}}
       >
         <ul class="list-group">
           <li data-testid="one" class="list-group-item">Item 1</li>
@@ -46,21 +41,59 @@ module('Integration | Component | sortable-js', function(hooks) {
       </SortableJs>
     `);
 
-    // const draggableGroup = find('.list-group');
-    /**
-     * @type HTMLElement
-     */
-    const elToBeDragged = find('li[data-testid="one"]');
-    const targetEl = find('li[data-testid="four"]');
+    const listItemOne = find('li[data-testid="one"]');
+    const listItemFour = find('li[data-testid="four"]');
 
-    simulateDrag(elToBeDragged, targetEl);
+    await simulateDrag(listItemOne, listItemFour);
 
-    // const mouseEvent = (type) => new MouseEvent(type, { bubbles: true, cancelable: true });
-    // const pointerEvent = (type, options) => new PointerEvent(type, Object.assign({ bubbles: true, cancelable: true }, options));
+    const listItems = document.querySelector('.list-group').children;
+    assert.equal(listItemOne, listItems[3]);
+  });
 
-    // elToBeDragged.dispatchEvent(pointerEvent('pointerdown'))
-    // elToBeDragged.dispatchEvent(mouseEvent('mouseup'));
+  test('it moves and element from one list to another', async function (assert) {
+    const onAdd = () => assert.ok(true, 'onAdd was called');
+    const onRemove = () => assert.ok(true, 'onRemove was called');
 
-    // assert.equal(this.element.textContent.trim(), 'template block text');
+    this.set('onAdd', onAdd);
+    this.set('onRemove', onRemove);
+
+    await render(hbs`
+      <SortableJs
+        @options={{hash animation=150 ghostClass="ghost-class" group="test-group"}}
+        @onRemove={{action this.onRemove}}
+      >
+        <ul class="list-group-a">
+          <li data-testid="one-a" class="list-group-item">Item 1</li>
+          <li data-testid="two-a" class="list-group-item">Item 2</li>
+          <li data-testid="three-a" class="list-group-item">Item 3</li>
+          <li data-testid="four-a" class="list-group-item">Item 4</li>
+          <li data-testid="five-a" class="list-group-item">Item 5</li>
+        </ul>
+      </SortableJs>
+
+      <SortableJs
+        @options={{hash animation=150 ghostClass="ghost-class" group="test-group"}}
+        @onAdd={{action this.onAdd}}
+      >
+        <ul class="list-group-b">
+          <li data-testid="one-b" class="list-group-item">Item 1</li>
+          <li data-testid="two-b" class="list-group-item">Item 2</li>
+          <li data-testid="three-b" class="list-group-item">Item 3</li>
+          <li data-testid="four-b" class="list-group-item">Item 4</li>
+          <li data-testid="five-b" class="list-group-item">Item 5</li>
+        </ul>
+      </SortableJs>
+    `);
+
+    const itemA = find('li[data-testid="one-a"]');
+    const itemB = find('li[data-testid="four-b"]');
+
+    await simulateDrag(itemA, itemB);
+
+    const aItems = document.querySelector('.list-group-a');
+    const bItems = document.querySelector('.list-group-b');
+
+    assert.equal(aItems.children.length, 4, 'list a has one less item');
+    assert.equal(bItems.children.length, 6, 'list b has one less item');
   });
 });
