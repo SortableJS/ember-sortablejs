@@ -2,12 +2,10 @@ import Component from '@ember/component';
 import Sortable from 'sortablejs';
 import { bind } from '@ember/runloop';
 import layout from '../templates/components/sortable-js';
-import { inject as service } from '@ember/service';
 
 const { freeze } = Object;
 
 export default Component.extend({
-  sim: service(),
   layout,
 
   classNames: ['ember-sortable-js'],
@@ -31,19 +29,6 @@ export default Component.extend({
     'setData',
     'onFilter',
   ]),
-
-  init(...args) {
-    this._super(...args);
-    // window.addEventListener('mousemove', (evt) => {
-    //   console.log('pageX', evt.pageX);
-    //   console.log('pageY', evt.pageY);
-    //   console.log('screenX', evt.screenX);
-    //   console.log('screenY', evt.screenY);
-    //   console.log('x', evt.x);
-    //   console.log('y', evt.y)
-    //   console.log('*****************************')
-    // });
-  },
 
   didInsertElement() {
     this._super(...arguments);
