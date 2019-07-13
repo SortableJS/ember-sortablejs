@@ -96,4 +96,56 @@ module('Integration | Component | sortable-js', function(hooks) {
     assert.equal(aItems.children.length, 4, 'list a has one less item');
     assert.equal(bItems.children.length, 6, 'list b has one less item');
   });
+
+  test('it clones an element from one list to another', async function (assert) {
+    const onClone = () => assert.ok(true, 'onClone was called');
+
+    this.set('onClone', onClone);
+
+    await render(hbs`
+      <SortableJs
+        @options={{hash
+          animation=150
+          ghostClass="ghost-class"
+          group=(hash name="shared" pull="clone")
+        }}
+      >
+        <ul class="list-group-a">
+          <li data-testid="one-a" class="list-group-item">Item 1</li>
+          <li data-testid="two-a" class="list-group-item">Item 2</li>
+          <li data-testid="three-a" class="list-group-item">Item 3</li>
+          <li data-testid="four-a" class="list-group-item">Item 4</li>
+          <li data-testid="five-a" class="list-group-item">Item 5</li>
+        </ul>
+      </SortableJs>
+
+      <SortableJs
+        @options={{hash
+          animation=150
+          ghostClass="ghost-class"
+          group=(hash name="shared" pull="clone")
+        }}
+        @onClone={{action this.onClone}}
+      >
+        <ul class="list-group-b">
+          <li data-testid="one-b" class="list-group-item">Item 1</li>
+          <li data-testid="two-b" class="list-group-item">Item 2</li>
+          <li data-testid="three-b" class="list-group-item">Item 3</li>
+          <li data-testid="four-b" class="list-group-item">Item 4</li>
+          <li data-testid="five-b" class="list-group-item">Item 5</li>
+        </ul>
+      </SortableJs>
+    `);
+
+    const itemA = find('li[data-testid="one-a"]');
+    const itemB = find('li[data-testid="four-b"]');
+
+    await simulateDrag(itemA, itemB);
+
+    const aItems = document.querySelector('.list-group-a');
+    const bItems = document.querySelector('.list-group-b');
+
+    assert.equal(aItems.children.length, 5, 'list a has all its elements');
+    assert.equal(bItems.children.length, 6, 'list b has a cloned item');
+  });
 });
