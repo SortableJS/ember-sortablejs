@@ -1,14 +1,18 @@
 <div class="row">
   <div class="col">
-    <h2>Shared list</h2>
+    <h2>Cloning</h2>
     <hr>
   </div>
 </div>
 <div class="row">
   <div class="col">
     <SortableJs
-      @options={{hash animation=150 ghostClass="ghost-class" group="shared"}}
-      @onRemove={{action "onRemove"}}
+      @options={{hash
+        animation=150
+        ghostClass="ghost-class"
+        group=(hash name="shared" pull="clone")
+      }}
+      @onClone={{action "onClone"}}
     >
       <ul class="list-group">
         <li data-testid="one" class="list-group-item">Item 1</li>
@@ -20,8 +24,12 @@
     </SortableJs>
     <br>
     <SortableJs
-      @options={{hash animation=150 ghostClass="ghost-class" group="shared"}}
-      @onAdd={{action "onAdd"}}
+      @options={{hash
+        animation=150
+        ghostClass="ghost-class"
+        group=(hash name="shared" pull="clone")
+      }}
+      @onClone={{action "onClone"}}
     >
       <ul class="list-group">
         <li data-testid="one" class="list-group-item bg-yellow">Item 1</li>
@@ -36,7 +44,11 @@
     <pre>
       <code>
         &lt;SortableJs
-          @options=&#123;&#123;hash animation=150 ghostClass="ghost-class" group="shared"&#125;&#125;
+          @options=&#123;&#123;hash
+            animation=150
+            ghostClass="ghost-class"
+            group=(hash name="shared" pull="clone")
+          &#125;&#125;
           @onRemove=&#123;&#123;action "onRemove"&#125;&#125;
         &gt;
           &lt;ul class="list-group"&gt;
@@ -49,7 +61,11 @@
         &lt;/SortableJs&gt;
 
         &lt;SortableJs
-          @options=&#123;&#123;hash animation=150 ghostClass="ghost-class" group="shared"&#125;&#125;
+          @options=&#123;&#123;hash
+            animation=150
+            ghostClass="ghost-class"
+            group=(hash name="shared" pull="clone")
+          &#125;&#125;
           @onAdd=&#123;&#123;action "onAdd"&#125;&#125;
         &gt;
           &lt;ul class="list-group"&gt;

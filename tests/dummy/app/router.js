@@ -9,6 +9,7 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('simple');
   this.route('shared');
+  this.route('clone');
 });
 
 export default Router;
