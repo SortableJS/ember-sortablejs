@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('simple');
   this.route('shared');
   this.route('clone');
+  this.route('disable');
 });
 
 export default Router;
