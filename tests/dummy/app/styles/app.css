@@ -10,3 +10,7 @@
 .shared-list li {
   width: 100%
 }
+
+.handle {
+  cursor: grab;
+}

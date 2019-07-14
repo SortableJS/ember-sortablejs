@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('shared');
   this.route('clone');
   this.route('disable');
+  this.route('handle');
 });
 
 export default Router;
