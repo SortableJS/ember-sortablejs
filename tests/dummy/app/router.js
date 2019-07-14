@@ -12,6 +12,7 @@ Router.map(function() {
   this.route('clone');
   this.route('disable');
   this.route('handle');
+  this.route('filter');
 });
 
 export default Router;

@@ -14,3 +14,7 @@
 .handle {
   cursor: grab;
 }
+
+.filter {
+  background-color: #e04e39;
+}
