@@ -13,6 +13,7 @@ Router.map(function() {
   this.route('disable');
   this.route('handle');
   this.route('filter');
+  this.route('thresholds');
 });
 
 export default Router;
