@@ -61,7 +61,7 @@ export default Component.extend({
     action = (action === 'onSetData') ? 'setData' : action;
 
     if (typeof action === 'function') {
-      action(...args);
+      action(...args, this.sortable);
     }
   }
 });
