@@ -1,5 +1,7 @@
 ember-sortablejs
 ==============================================================================
+[![Build Status](https://travis-ci.org/SortableJS/ember-sortablejs.svg?branch=master)](https://travis-ci.org/SortableJS/ember-sortablejs)
+[![Ember Observer Score](https://emberobserver.com/badges/ember-sortablejs.svg)](https://emberobserver.com/addons/ember-sortablejs)
 
 This addon allows you to use drag and drop in your ember application using [SortableJS/Sortable](https://github.com/SortableJS/Sortable)
 

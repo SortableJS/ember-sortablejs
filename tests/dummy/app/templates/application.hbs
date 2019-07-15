@@ -30,5 +30,19 @@
   </div>
 </nav>
 <div class="container-fluid">
-  {{outlet}}
+  {{#if this.inHomeRoute}}
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+      <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 font-weight-normal">Ember-SortableJS</h1>
+        <p class="lead font-weight-normal">Drag and Drop with sort for ambitious applications</p>
+        {{#link-to "simple" class="btn btn-outline-secondary"}}
+          Get Started
+        {{/link-to}}
+      </div>
+      <div class="product-device shadow-sm d-none d-md-block"></div>
+      <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+  {{else}}
+    {{outlet}}
+  {{/if}}
 </div>
