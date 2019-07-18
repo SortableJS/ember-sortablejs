@@ -13,11 +13,13 @@
       <ul class="pretty-list">
         <li data-testid="one">
           {{! template-lint-disable no-inline-styles }}
-          <div class="threshold-indicator" style={{html-safe (concat "height: " this.thresholdHeight "%")}}>Item 1</div>
+          {{! template-lint-disable style-concatenation }}
+          <div class="threshold-indicator" style="height: {{this.thresholdHeight}}%">Item 1</div>
         </li>
         <li data-testid="one">
           {{! template-lint-disable no-inline-styles }}
-          <div class="threshold-indicator" style={{html-safe (concat "height: " this.thresholdHeight "%")}}>Item 2</div>
+          {{! template-lint-disable style-concatenation }}
+          <div class="threshold-indicator" style="height: {{this.thresholdHeight}}%">Item 2</div>
         </li>
       </ul>
       <div>
