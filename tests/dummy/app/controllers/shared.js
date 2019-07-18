@@ -2,10 +2,10 @@ import Controller from '@ember/controller';
 
 export default Controller.extend({
   actions: {
-    onAdd(evt) {
+    onAdd() {
       console.log('*** Action *** - onAdd');
     },
-    onRemove(evt) {
+    onRemove() {
       console.log('*** Action *** - onRemove');
     },
   }

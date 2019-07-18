@@ -2,46 +2,36 @@ import Controller from '@ember/controller';
 
 export default Controller.extend({
   actions: {
-    onChoose(evt) {
+    onChoose() {
       console.log('*** Action *** - onChoose');
     },
-    onUnchoose(evt) {
+    onUnchoose() {
       console.log('*** Action *** - onUnchoose');
     },
-    onStart(evt) {
+    onStart() {
       console.log('*** Action *** - onStart');
     },
-    onEnd(evt) {
+    onEnd() {
       console.log('*** Action *** - onEnd');
     },
-    onMove(evt) {
+    onMove() {
       console.log('*** Action *** - onMove');
     },
-    onUpdate(evt) {
+    onUpdate() {
       console.log('*** Action *** - onUpdate');
     },
-    onAdd(evt) {
+    onAdd() {
       console.log('*** Action *** - onAdd');
     },
-    onRemove(evt) {
+    onRemove() {
       console.log('*** Action *** - onAdd');
     },
-    onClone(evt) {
+    onClone() {
       //_onDragStart
       console.log('*** Action *** - onClone');
     },
-    onChange(evt) {
+    onChange() {
       console.log('*** Action *** - onChange');
     },
-    // trigger(actionName, evt) {
-      // console.log('*** Action ***', actionName, evt);
-
-    //   if (actionName === 'onChoose') {
-    //     this.set('actionStack', []);
-    //   }
-
-    //   this.get('actionStack').pushObject(actionName);
-    // }
-    // }
   }
 });
