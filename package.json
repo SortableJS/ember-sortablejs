@@ -13,7 +13,7 @@
     "drag and drop"
   ],
   "repository": "https://github.com/SortableJS/ember-sortablejs",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "author": "Luis Vegerano",
   "directories": {
     "doc": "doc",
