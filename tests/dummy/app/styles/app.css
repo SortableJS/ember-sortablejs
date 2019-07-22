@@ -10,3 +10,42 @@
 .shared-list li {
   width: 100%
 }
+
+.handle {
+  cursor: grab;
+}
+
+.filter {
+  background-color: #e04e39;
+}
+
+.ember-sortable-js {
+  width: 200px;
+}
+
+.pretty-list {
+  list-style: none;
+}
+
+.pretty-list li {
+  background-color: #A10808;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 150px;
+  border: 1px solid grey;
+  margin: 20px;
+  width: 150px;
+}
+
+.threshold-indicator {
+  display: flex;
+  flex-direction: column  ;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #cf2b2b;
+  width: 100%;
+}

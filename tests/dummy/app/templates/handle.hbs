@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col">
+    <h2>Using drag handles</h2>
+    <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <SortableJs
+      @options={{hash animation=150 handle=".handle"}}
+    >
+      <ul class="list-group">
+        <li data-testid="one" class="list-group-item"><span class="handle">&#9776;</span>&nbsp;Item 1</li>
+        <li data-testid="two" class="list-group-item"><span class="handle">&#9776;</span>&nbsp;Item 2</li>
+        <li data-testid="three" class="list-group-item"><span class="handle">&#9776;</span>&nbsp;Item 3</li>
+        <li data-testid="four" class="list-group-item"><span class="handle">&#9776;</span>&nbsp;Item 4</li>
+        <li data-testid="five" class="list-group-item"><span class="handle">&#9776;</span>&nbsp;Item 5</li>
+      </ul>
+    </SortableJs>
+  </div>
+  <div class="col">
+    <pre>
+      <code>
+        &lt;SortableJs
+          @options=&#123;&#123;hash animation=150 handle=".handle"&#125;&#125;
+        &gt;
+          &lt;ul class="list-group"&gt;
+            &lt;li class="list-group-item"&gt;&lt;span class="handle"&gt;&#9776;&lt;/span&gt;Item 1&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;&lt;span class="handle"&gt;&#9776;&lt;/span&gt;Item 2&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;&lt;span class="handle"&gt;&#9776;&lt;/span&gt;Item 3&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;&lt;span class="handle"&gt;&#9776;&lt;/span&gt;Item 4&lt;/li&gt;
+            &lt;li class="list-group-item"&gt;&lt;span class="handle"&gt;&#9776;&lt;/span&gt;Item 5&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/SortableJs&gt;
+      </code>
+    </pre>
+  </div>
+</div>

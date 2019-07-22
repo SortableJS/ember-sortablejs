@@ -1,22 +1,9 @@
 import Controller from '@ember/controller';
-import { A } from '@ember/array';
+import { equal } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
-  actionStack: null,
+  router: service(),
 
-  init() {
-    this._super(...arguments);
-    this.set('actionStack', A([]));
-  },
-
-  actions: {
-    trigger(actionName) {
-
-      if (actionName === 'onChoose') {
-        this.set('actionStack', A([]));
-      }
-
-      this.get('actionStack').pushObject(actionName);
-    }
-  }
+  inHomeRoute: equal('router.currentRouteName', 'index'),
 });
