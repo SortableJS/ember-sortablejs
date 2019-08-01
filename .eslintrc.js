@@ -15,6 +15,7 @@ module.exports = {
     browser: true
   },
   rules: {
+    'ember/order-in-components': [2],
   },
   overrides: [
     // node files
