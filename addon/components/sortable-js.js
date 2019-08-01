@@ -33,10 +33,11 @@ export default Component.extend({
 
   didReceiveAttrs: diffAttrs('options', function(changedAttrs, ...args) {
     this._super(...args);
+
     if(changedAttrs && changedAttrs.options) {
       const options = changedAttrs.options.pop();
+
       for (let [key, value] of Object.entries(options)) {
-        console.log('setting options', key, value);
         this.setOptions(key, value);
       }
     }
