@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import Sortable from 'sortablejs';
 import { bind } from '@ember/runloop';
+import diffAttrs from 'ember-diff-attrs';
 import layout from '../templates/components/sortable-js';
 
 const { freeze } = Object;
@@ -29,6 +30,17 @@ export default Component.extend({
     'setData',
     'onFilter',
   ]),
+
+  didReceiveAttrs: diffAttrs('options', function(changedAttrs, ...args) {
+    this._super(...args);
+    if(changedAttrs && changedAttrs.options) {
+      const options = changedAttrs.options.pop();
+      for (let [key, value] of Object.entries(options)) {
+        console.log('setting options', key, value);
+        this.setOptions(key, value);
+      }
+    }
+  }),
 
   didInsertElement() {
     this._super(...arguments);
@@ -63,5 +75,9 @@ export default Component.extend({
     if (typeof action === 'function') {
       action(...args, this.sortable);
     }
-  }
+  },
+
+  setOptions(option, value) {
+    this.sortable.option(option, value);
+  },
 });

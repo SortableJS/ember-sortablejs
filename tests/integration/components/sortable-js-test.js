@@ -148,4 +148,69 @@ module('Integration | Component | sortable-js', function(hooks) {
     assert.equal(aItems.children.length, 5, 'list a has all its elements');
     assert.equal(bItems.children.length, 6, 'list b has a cloned item');
   });
+
+  test('it dynamically sets options', async function(assert) {
+    let count = 0;
+    const done = assert.async();
+    const onChoose = () => assert.ok(true, 'onChosse was called');
+    const onStart = () => assert.ok(true, 'onStart was called');
+    const onMove = () => assert.ok(true, 'onMove was called');
+    const onEnd = (event, sortableInstance) => {
+      assert.ok(true, 'onEnd was called');
+      count += 1;
+      if (count === 2) {
+        assert.equal(sortableInstance.option('animation'), 100, 'Animation was changed to 100');
+        assert.equal(sortableInstance.option('ghostClass'), 'foo', 'Ghost class was changed to foo');
+        done();
+      }
+    }
+
+    let options = {
+      animation: 150,
+      ghostClass: 'ghost-class',
+    };
+
+    this.set('onChoose', onChoose);
+    this.set('onStart', onStart);
+    this.set('onMove', onMove);
+    this.set('onEnd', onEnd);
+    this.set('options', options);
+
+    // Template block usage:
+    await render(hbs`
+      <SortableJs
+        @options={{options}}
+        @onChoose={{action onChoose}}
+        @onStart={{action onStart}}
+        @onMove={{action onMove}}
+        @onEnd={{action onEnd}}
+      >
+        <ul class="list-group">
+          <li data-testid="one" class="list-group-item">Item 1</li>
+          <li data-testid="two" class="list-group-item">Item 2</li>
+          <li data-testid="three" class="list-group-item">Item 3</li>
+          <li data-testid="four" class="list-group-item">Item 4</li>
+          <li data-testid="five" class="list-group-item">Item 5</li>
+        </ul>
+      </SortableJs>
+    `);
+
+    const listItemOne = find('li[data-testid="one"]');
+    const listItemFour = find('li[data-testid="four"]');
+    const listItemTwo = find('li[data-testid="two"]');
+
+    await simulateDrag(listItemOne, listItemFour);
+
+    const listItems = document.querySelector('.list-group').children;
+    assert.equal(listItemOne, listItems[3]);
+
+    options = {
+      animation: 100,
+      ghostClass: 'foo',
+    };
+
+    this.set('options', options);
+
+    await simulateDrag(listItemTwo, listItemOne);
+  });
 });
