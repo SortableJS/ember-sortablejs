@@ -6,6 +6,8 @@ import { action } from '@ember/object';
 const { freeze } = Object;
 
 export default class SortableJsComponent extends Component {
+  sortable = null;
+
   events = freeze([
     'onChoose',
     'onUnchoose',
@@ -48,7 +50,7 @@ export default class SortableJsComponent extends Component {
 
   setupEventHandlers() {
     this.events.forEach(eventName => {
-      const action = this[eventName];
+      const action = this.args[eventName];
       if (typeof action === 'function') {
         this.sortable.option(eventName, bind(this, 'performExternalAction', eventName));
       }
@@ -56,7 +58,7 @@ export default class SortableJsComponent extends Component {
   }
 
   performExternalAction(actionName, ...args) {
-    let action = this[actionName];
+    let action = this.args[actionName];
 
     action = (action === 'onSetData') ? 'setData' : action;
 

@@ -26,10 +26,10 @@ module('Integration | Component | sortable-js', function(hooks) {
     await render(hbs`
       <SortableJs
         @options={{hash animation=150 ghostClass="ghost-class"}}
-        @onChoose={{action onChoose}}
-        @onStart={{action onStart}}
-        @onMove={{action onMove}}
-        @onEnd={{action onEnd}}
+        @onChoose={{action this.onChoose}}
+        @onStart={{action this.onStart}}
+        @onMove={{action this.onMove}}
+        @onEnd={{action this.onEnd}}
       >
         <ul class="list-group">
           <li data-testid="one" class="list-group-item">Item 1</li>
@@ -47,7 +47,7 @@ module('Integration | Component | sortable-js', function(hooks) {
     await simulateDrag(listItemOne, listItemFour);
 
     const listItems = document.querySelector('.list-group').children;
-    assert.equal(listItemOne, listItems[3]);
+    assert.equal(listItemOne, listItems[3], 'list item was moved');
   });
 
   test('it moves and element from one list to another', async function (assert) {

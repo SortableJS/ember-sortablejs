@@ -7,10 +7,10 @@ function getPositionAtCenter(element) {
 }
 
 function getDistanceBetweenElements(a, b) {
- const aPosition = getPositionAtCenter(a);
- const bPosition = getPositionAtCenter(b);
+  const aPosition = getPositionAtCenter(a);
+  const bPosition = getPositionAtCenter(b);
 
- return Math.hypot(aPosition.x - bPosition.x, aPosition.y - bPosition.y);
+  return Math.hypot(aPosition.x - bPosition.x, aPosition.y - bPosition.y);
 }
 
 function createEvent (eventName, options) {
@@ -20,7 +20,7 @@ function createEvent (eventName, options) {
 
   /* if the clientX and clientY options are specified,
   also calculated the desired screenX and screenY values */
-  if(options.x && options.y) {
+  if (options.x && options.y) {
       event.screenX = window.screenX + options.x;
       event.screenY = window.screenY + options.y;
       event.clientX = options.x;
@@ -57,7 +57,7 @@ export async function simulateDrag (sourceElement, targetElement) {
   const sourceCoordinates = sourceElement.getBoundingClientRect();
   const targetCoordinates = targetElement.getBoundingClientRect();
 
-  const distance = getDistanceBetweenElements(sourceElement, targetElement);
+  const distance = getDistanceBetweenElements(sourceElement, targetElement) + 5;
   console.log('distance', distance);
 
   /* simulate a mouse down event on the coordinates
