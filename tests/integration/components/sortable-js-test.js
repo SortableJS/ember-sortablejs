@@ -202,7 +202,7 @@ module('Integration | Component | sortable-js', function(hooks) {
     await simulateDrag(listItemOne, listItemFour);
 
     const listItems = document.querySelector('.list-group').children;
-    assert.equal(listItemOne, listItems[3]);
+    assert.equal(listItemOne, listItems[3], 'dragged successful');
 
     options = {
       animation: 100,
@@ -211,6 +211,8 @@ module('Integration | Component | sortable-js', function(hooks) {
 
     this.set('options', options);
 
-    await simulateDrag(listItemTwo, listItemOne);
+    await new Promise((resolve) => setTimeout(() => resolve(), 1000));
+
+    await simulateDrag(listItemTwo, listItemOne)
   });
 });

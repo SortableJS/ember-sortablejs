@@ -58,7 +58,6 @@ export async function simulateDrag (sourceElement, targetElement) {
   const targetCoordinates = targetElement.getBoundingClientRect();
 
   const distance = getDistanceBetweenElements(sourceElement, targetElement) + 5;
-  console.log('distance', distance);
 
   /* simulate a mouse down event on the coordinates
   of the source element */
