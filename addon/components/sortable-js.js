@@ -26,6 +26,10 @@ export default class SortableJsComponent extends Component {
     'onFilter',
   ]);
 
+  get wraps() {
+    return this.args.wraps || false;
+  }
+
   @action
   setOptions() {
     for (let [key, value] of Object.entries(this.args.options)) {
@@ -35,7 +39,7 @@ export default class SortableJsComponent extends Component {
 
   @action
   didInsert(element) {
-    const el = element.firstElementChild;
+    const el = this.wraps ? element : element.firstElementChild;
     const defaults = {};
     const options = Object.assign({}, defaults, this.options);
 
