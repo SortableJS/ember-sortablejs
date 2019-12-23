@@ -1,19 +1,12 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import Sortable from 'sortablejs';
 import { bind } from '@ember/runloop';
-import diffAttrs from 'ember-diff-attrs';
-import layout from '../templates/components/sortable-js';
+import { action } from '@ember/object';
 
 const { freeze } = Object;
 
-export default Component.extend({
-  layout,
-
-  classNames: ['ember-sortable-js'],
-
-  options: null,
-
-  events: freeze([
+export default class SortableJsComponent extends Component {
+  events = freeze([
     'onChoose',
     'onUnchoose',
     'onStart',
@@ -29,35 +22,29 @@ export default Component.extend({
     'onSetData',
     'setData',
     'onFilter',
-  ]),
+  ]);
 
-  didReceiveAttrs: diffAttrs('options', function(changedAttrs, ...args) {
-    this._super(...args);
-
-    if(changedAttrs && changedAttrs.options) {
-      const options = changedAttrs.options.pop();
-
-      for (let [key, value] of Object.entries(options)) {
-        this.setOptions(key, value);
-      }
+  @action
+  setOptions() {
+    for (let [key, value] of Object.entries(this.args.options)) {
+      this.setOption(key, value);
     }
-  }),
+  }
 
-  didInsertElement() {
-    this._super(...arguments);
-
-    const el = this.element.firstElementChild;
+  @action
+  didInsert(element) {
+    const el = element.firstElementChild;
     const defaults = {};
     const options = Object.assign({}, defaults, this.options);
 
     this.sortable = Sortable.create(el, options);
     this.setupEventHandlers();
-  },
+    this.setOptions();
+  }
 
-  willDestroyElement() {
+  willDestroy() {
     this.sortable.destroy();
-    this._super(...arguments);
-  },
+  }
 
   setupEventHandlers() {
     this.events.forEach(eventName => {
@@ -66,7 +53,7 @@ export default Component.extend({
         this.sortable.option(eventName, bind(this, 'performExternalAction', eventName));
       }
     });
-  },
+  }
 
   performExternalAction(actionName, ...args) {
     let action = this[actionName];
@@ -76,9 +63,9 @@ export default Component.extend({
     if (typeof action === 'function') {
       action(...args, this.sortable);
     }
-  },
+  }
 
-  setOptions(option, value) {
+  setOption(option, value) {
     this.sortable.option(option, value);
-  },
-});
+  }
+}
