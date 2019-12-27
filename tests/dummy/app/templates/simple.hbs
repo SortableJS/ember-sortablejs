@@ -8,16 +8,16 @@
   <div class="col">
     <SortableJs
       @options={{hash animation=150 ghostClass="ghost-class"}}
-      @onChoose={{action "onChoose"}}
-      @onUnchoose={{action "onUnchoose"}}
-      @onStart={{action "onStart"}}
-      @onEnd={{action "onEnd"}}
-      @onAdd={{action "onAdd"}}
-      @onUpdate={{action "onUpdate"}}
-      @onRemove={{action "onRemove"}}
-      @onMove={{action "onMove"}}
-      @onClone={{action "onClone"}}
-      @onChange={{action "onChange"}}
+      @onChoose={{fn this.onChoose}}
+      @onUnchoose={{fn this.onUnchoose}}
+      @onStart={{fn this.onStart}}
+      @onEnd={{fn this.onEnd}}
+      @onAdd={{fn this.onAdd}}
+      @onUpdate={{fn this.onUpdate}}
+      @onRemove={{fn this.onRemove}}
+      @onMove={{fn this.onMove}}
+      @onClone={{fn this.onClone}}
+      @onChange={{fn this.onChange}}
     >
       <ul class="list-group">
         <li data-testid="one" class="list-group-item">Item 1</li>

@@ -8,7 +8,7 @@
   <div class="col">
     <SortableJs
       @options={{hash animation=150 ghostClass="ghost-class" group="shared"}}
-      @onRemove={{action "onRemove"}}
+      @onRemove={{fn this.onRemove}}
     >
       <ul class="list-group">
         <li data-testid="one" class="list-group-item">Item 1</li>
@@ -21,7 +21,7 @@
     <br>
     <SortableJs
       @options={{hash animation=150 ghostClass="ghost-class" group="shared"}}
-      @onAdd={{action "onAdd"}}
+      @onAdd={{fn this.onAdd}}
     >
       <ul class="list-group">
         <li data-testid="one" class="list-group-item bg-yellow">Item 1</li>
@@ -37,7 +37,7 @@
       <code>
         &lt;SortableJs
           @options=&#123;&#123;hash animation=150 ghostClass="ghost-class" group="shared"&#125;&#125;
-          @onRemove=&#123;&#123;action "onRemove"&#125;&#125;
+          @onRemove=&#123;&#123;fn this.onRemove&#125;&#125;
         &gt;
           &lt;ul class="list-group"&gt;
             &lt;li class="list-group-item">Item 1&lt;/li&gt;
@@ -50,7 +50,7 @@
 
         &lt;SortableJs
           @options=&#123;&#123;hash animation=150 ghostClass="ghost-class" group="shared"&#125;&#125;
-          @onAdd=&#123;&#123;action "onAdd"&#125;&#125;
+          @onAdd=&#123;&#123;fn this.onAdd&#125;&#125;
         &gt;
           &lt;ul class="list-group"&gt;
             &lt;li class="list-group-item">Item 1&lt;/li&gt;

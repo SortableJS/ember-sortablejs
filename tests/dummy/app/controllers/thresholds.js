@@ -1,17 +1,17 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  rangeValue: 0.25,
+export default class ThresholdsController extends Controller {
+  @tracked rangeValue = 0.25;
 
-  thresholdHeight: computed('rangeValue', function () {
+  get thresholdHeight() {
     return this.rangeValue * 100;
-  }),
+  }
 
-  actions: {
-    setRange(sortable, evt) {
-      this.set('rangeValue', evt.target.value);
-      sortable.option('swapThreshold', evt.target.value);
-    }
-  },
-});
+  @action
+  setRange(sortable, evt) {
+    this.set('rangeValue', evt.target.value);
+    sortable.option('swapThreshold', evt.target.value);
+  }
+}
