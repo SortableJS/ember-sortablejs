@@ -9,8 +9,8 @@ This addon allows you to use drag and drop in your ember application using [Sort
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v3.8 or above
-* Ember CLI v2.13 or above
+* Ember.js v3.13 or above
+* Ember CLI v3.13 or above
 * Node.js v8 or above
 
 
