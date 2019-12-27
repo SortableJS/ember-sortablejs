@@ -41,7 +41,7 @@ export default class SortableJsComponent extends Component {
   didInsert(element) {
     const el = this.wraps ? element : element.firstElementChild;
     const defaults = {};
-    const options = Object.assign({}, defaults, this.options);
+    const options = Object.assign({}, defaults, this.args.options);
 
     this.sortable = Sortable.create(el, options);
     this.setupEventHandlers();
@@ -72,6 +72,7 @@ export default class SortableJsComponent extends Component {
   }
 
   setOption(option, value) {
+    console.log('setting option: ', option, value);
     this.sortable.option(option, value);
   }
 }
