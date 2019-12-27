@@ -52,6 +52,8 @@ Usage
 
 Options
 ------------------------------------------------------------------------------
+`wraps {Boolean}` - This argument ndicates whether the component itself is wrapping the sortable items.
+
 The addon supports all the options that sortable accepts, see: https://github.com/SortableJS/Sortable#options
 
 Options are passed using the `{{hash}}` helper.
