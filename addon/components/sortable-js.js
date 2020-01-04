@@ -37,6 +37,10 @@ export default class SortableJsComponent extends Component {
     }
   }
 
+  /**
+   *
+   * @param {HTMLElement} element
+   */
   @action
   didInsert(element) {
     const el = this.wraps ? element : element.firstElementChild;
@@ -45,7 +49,6 @@ export default class SortableJsComponent extends Component {
 
     this.sortable = Sortable.create(el, options);
     this.setupEventHandlers();
-    this.setOptions();
   }
 
   willDestroy() {
