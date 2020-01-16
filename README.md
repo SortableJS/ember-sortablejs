@@ -78,4 +78,4 @@ All actions get the events as described in the SortableJS docs as well as the so
 License
 ------------------------------------------------------------------------------
 
-This project is licensed under the [MIT License](LICENSE.md).
+This project is licensed under the [GPL-3.0 License](LICENSE.md).
