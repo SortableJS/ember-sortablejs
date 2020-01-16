@@ -3,12 +3,10 @@ import Sortable from 'sortablejs';
 import { bind } from '@ember/runloop';
 import { action } from '@ember/object';
 
-const { freeze } = Object;
-
 export default class SortableJsComponent extends Component {
   sortable = null;
 
-  events = freeze([
+  #events = [
     'onChoose',
     'onUnchoose',
     'onStart',
@@ -24,11 +22,7 @@ export default class SortableJsComponent extends Component {
     'onSetData',
     'setData',
     'onFilter',
-  ]);
-
-  get wraps() {
-    return this.args.wraps || false;
-  }
+  ];
 
   @action
   setOptions() {
@@ -43,11 +37,10 @@ export default class SortableJsComponent extends Component {
    */
   @action
   didInsert(element) {
-    const el = this.wraps ? element : element.firstElementChild;
     const defaults = {};
     const options = Object.assign({}, defaults, this.args.options);
 
-    this.sortable = Sortable.create(el, options);
+    this.sortable = Sortable.create(element, options);
     this.setupEventHandlers();
   }
 
@@ -56,7 +49,7 @@ export default class SortableJsComponent extends Component {
   }
 
   setupEventHandlers() {
-    this.events.forEach(eventName => {
+    this.#events.forEach(eventName => {
       const action = this.args[eventName];
       if (typeof action === 'function') {
         this.sortable.option(eventName, bind(this, 'performExternalAction', eventName));
@@ -75,7 +68,6 @@ export default class SortableJsComponent extends Component {
   }
 
   setOption(option, value) {
-    console.log('setting option: ', option, value);
     this.sortable.option(option, value);
   }
 }

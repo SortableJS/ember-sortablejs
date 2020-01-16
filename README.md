@@ -28,35 +28,29 @@ Usage
 ```html
 <SortableJs
   @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
-  @onChoose={{action "trigger" "onChoose"}}
-  @onUnchoose={{action "trigger" "onUnchoose"}}
-  @onStart={{action "trigger" "onStart"}}
-  @onEnd={{action "trigger" "onEnd"}}
-  @onAdd={{action "trigger" "onAdd"}}
-  @onUpdate={{action "trigger" "onUpdate"}}
-  @onRemove={{action "trigger" "onRemove"}}
-  @onMove={{action "trigger" "onMove"}}
-  @onClone={{action "trigger" "onClone"}}
-  @onChange={{action "trigger" "onChange"}}
+  @onChoose={{fn this.onChoose}}
+  @onUnchoose={{fn this.onUnchoose}}
+  @onStart={{fn this.onStart}}
+  @onEnd={{fn this.onEnd}}
+  @onAdd={{fn this.onAdd}}
+  @onUpdate={{fn this.onUpdate}}
+  @onRemove={{fn this.onRemove}}
+  @onMove={{fn this.onMove}}
+  @onClone={{fn this.onClone}}
+  @onChange={{fn this.onChange}}
   as |sortable|
 >
-  <ul class="list-group">
-    <li class="list-group-item bg-yellow">Item 1</li>
-    <li class="list-group-item bg-yellow">Item 2</li>
-    <li class="list-group-item bg-yellow">Item 3</li>
-    <li class="list-group-item bg-yellow">Item 4</li>
-    <li class="list-group-item bg-yellow">Item 5</li>
-  </ul>
+  <div class="list-group-item bg-yellow">Item 1</div>
+  <div class="list-group-item bg-yellow">Item 2</div>
+  <div class="list-group-item bg-yellow">Item 3</div>
+  <div class="list-group-item bg-yellow">Item 4</div>
+  <div class="list-group-item bg-yellow">Item 5</div>
 </SortableJs>
 ```
 
 Options
 ------------------------------------------------------------------------------
-`wraps {Boolean}` - This argument ndicates whether the component itself is wrapping the sortable items.
-
 The addon supports all the options that sortable accepts, see: https://github.com/SortableJS/Sortable#options
-
-Options are passed using the `{{hash}}` helper.
 
 The events:
 - `onChoose`
@@ -76,7 +70,10 @@ The events:
 - `onFilter`
 
 Should be in the component signature as closure actions.
-All actions get the events as described in the SortableJS docs as the sortable instance.
+All actions get the events as described in the SortableJS docs as well as the sortable instance.
+```js
+  onChoose(evt, sortable) {...}
+```
 
 License
 ------------------------------------------------------------------------------
