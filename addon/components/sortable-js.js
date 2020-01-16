@@ -19,7 +19,6 @@ export default class SortableJsComponent extends Component {
     'onClone',
     'onChange',
     'scrollFn',
-    'onSetData',
     'setData',
     'onFilter',
   ];
@@ -59,8 +58,6 @@ export default class SortableJsComponent extends Component {
 
   performExternalAction(actionName, ...args) {
     let action = this.args[actionName];
-
-    action = (action === 'onSetData') ? 'setData' : action;
 
     if (typeof action === 'function') {
       action(...args, this.sortable);
