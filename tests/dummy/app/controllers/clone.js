@@ -1,9 +1,7 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  actions: {
-    onClone() {
-      console.log('*** Action *** - onClone');
-    },
+export default class CloneController extends Controller {
+  onClone() {
+    console.log('*** Action *** - onClone');
   }
-});
+}

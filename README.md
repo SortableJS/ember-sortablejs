@@ -9,8 +9,9 @@ This addon allows you to use drag and drop in your ember application using [Sort
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v2.18 or above
-* Ember CLI v2.13 or above
+* Ember.js v3.13 or above
+* Ember CLI v3.13 or above
+* Node.js v8 or above
 
 
 Installation
@@ -27,33 +28,29 @@ Usage
 ```html
 <SortableJs
   @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
-  @onChoose={{action "trigger" "onChoose"}}
-  @onUnchoose={{action "trigger" "onUnchoose"}}
-  @onStart={{action "trigger" "onStart"}}
-  @onEnd={{action "trigger" "onEnd"}}
-  @onAdd={{action "trigger" "onAdd"}}
-  @onUpdate={{action "trigger" "onUpdate"}}
-  @onRemove={{action "trigger" "onRemove"}}
-  @onMove={{action "trigger" "onMove"}}
-  @onClone={{action "trigger" "onClone"}}
-  @onChange={{action "trigger" "onChange"}}
+  @onChoose={{fn this.onChoose}}
+  @onUnchoose={{fn this.onUnchoose}}
+  @onStart={{fn this.onStart}}
+  @onEnd={{fn this.onEnd}}
+  @onAdd={{fn this.onAdd}}
+  @onUpdate={{fn this.onUpdate}}
+  @onRemove={{fn this.onRemove}}
+  @onMove={{fn this.onMove}}
+  @onClone={{fn this.onClone}}
+  @onChange={{fn this.onChange}}
   as |sortable|
 >
-  <ul class="list-group">
-    <li class="list-group-item bg-yellow">Item 1</li>
-    <li class="list-group-item bg-yellow">Item 2</li>
-    <li class="list-group-item bg-yellow">Item 3</li>
-    <li class="list-group-item bg-yellow">Item 4</li>
-    <li class="list-group-item bg-yellow">Item 5</li>
-  </ul>
+  <div class="list-group-item bg-yellow">Item 1</div>
+  <div class="list-group-item bg-yellow">Item 2</div>
+  <div class="list-group-item bg-yellow">Item 3</div>
+  <div class="list-group-item bg-yellow">Item 4</div>
+  <div class="list-group-item bg-yellow">Item 5</div>
 </SortableJs>
 ```
 
 Options
 ------------------------------------------------------------------------------
 The addon supports all the options that sortable accepts, see: https://github.com/SortableJS/Sortable#options
-
-Options are passed using the `{{hash}}` helper.
 
 The events:
 - `onChoose`
@@ -68,14 +65,48 @@ The events:
 - `onClone`
 - `onChange`
 - `scrollFn`
-- `onSetData`
 - `setData`
 - `onFilter`
 
 Should be in the component signature as closure actions.
-All actions get the events as described in the SortableJS docs as the sortable instance.
+All actions get the events as described in the SortableJS docs as well as the sortable instance.
+```js
+  onChoose(evt, sortable) {...}
+```
+Migrating from 1.x
+------------------------------------------------------------------------------
+- `onSetData` is no longer suported. Rename argument to `setData`.
+- `<SortableJs>` no longer expects a wrapped list. Instead the addon itself will act as the sortable list container.
 
+v1
+```html
+<SortableJs
+  @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
+>
+  <ul class="list-group">
+    <li class="list-group-item">Item 1</li>
+    <li class="list-group-item">Item 2</li>
+    <li class="list-group-item">Item 3</li>
+    <li class="list-group-item">Item 4</li>
+    <li class="list-group-item">Item 5</li>
+  </ul>
+</SortableJs>
+```
+
+v2
+```html
+<SortableJs
+  class="list-group"
+  @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
+>
+  <div class="list-group-item">Item 1</div>
+  <div class="list-group-item">Item 2</div>
+  <div class="list-group-item">Item 3</div>
+  <div class="list-group-item">Item 4</div>
+  <div class="list-group-item">Item 5</div>
+</SortableJs>
+```
 License
 ------------------------------------------------------------------------------
 
-This project is licensed under the [MIT License](LICENSE.md).
+This project is licensed under the [GPL-3.0 License](LICENSE.md).

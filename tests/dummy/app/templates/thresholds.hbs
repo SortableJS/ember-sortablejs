@@ -7,23 +7,26 @@
 <div class="row">
   <div class="col">
     <SortableJs
-      @options={{hash animation=150 swapThreshold=this.rangeValue}}
+      class="pretty-list"
+      @options={{hash
+        animation=150
+        swapThreshold=this.rangeValue
+        draggable=".item"
+      }}
       as |sortable|
     >
-      <ul class="pretty-list">
-        <li data-testid="one">
-          {{! template-lint-disable no-inline-styles }}
-          {{! template-lint-disable style-concatenation }}
-          <div class="threshold-indicator" style="height: {{this.thresholdHeight}}%">Item 1</div>
-        </li>
-        <li data-testid="one">
-          {{! template-lint-disable no-inline-styles }}
-          {{! template-lint-disable style-concatenation }}
-          <div class="threshold-indicator" style="height: {{this.thresholdHeight}}%">Item 2</div>
-        </li>
-      </ul>
-      <div>
-        Threshold:&nbsp;<input type="range" min="0" max="1" step="0.01" value={{this.rangeValue}} oninput={{action "setRange" sortable}}>
+      <div class="item" data-testid="one">
+        {{! template-lint-disable no-inline-styles }}
+        {{! template-lint-disable style-concatenation }}
+        <div class="threshold-indicator" style="height: {{this.thresholdHeight}}%">Item 1</div>
+      </div>
+      <div class="item" data-testid="one">
+        {{! template-lint-disable no-inline-styles }}
+        {{! template-lint-disable style-concatenation }}
+        <div class="threshold-indicator" style="height: {{this.thresholdHeight}}%">Item 2</div>
+      </div>
+      <div class="threshold">
+        Threshold:&nbsp;<input type="range" min="0" max="1" step="0.01" value={{this.rangeValue}} {{on "input" (fn this.setRange sortable)}}>
       </div>
     </SortableJs>
   </div>
@@ -31,11 +34,10 @@
     <pre>
       <code>
         &lt;SortableJs
+          class="pretty-list"
           @options=&#123;&#123;hash animation=150 swapThreshold={{this.rangeValue}}&#125;&#125;
         &gt;
-          &lt;ul class="list-group"&gt;
-            &lt;li class="list-group-item"&gt;&lt;/span&gt;Item 1&lt;/li&gt;
-          &lt;/ul&gt;
+          &lt;div class="list-group-item"&gt;&lt;/span&gt;Item 1&lt;/div&gt;
         &lt;/SortableJs&gt;
       </code>
     </pre>

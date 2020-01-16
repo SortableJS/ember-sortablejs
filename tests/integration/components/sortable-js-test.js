@@ -25,29 +25,28 @@ module('Integration | Component | sortable-js', function(hooks) {
     // Template block usage:
     await render(hbs`
       <SortableJs
+        class="list-group"
         @options={{hash animation=150 ghostClass="ghost-class"}}
-        @onChoose={{action onChoose}}
-        @onStart={{action onStart}}
-        @onMove={{action onMove}}
-        @onEnd={{action onEnd}}
+        @onChoose={{action this.onChoose}}
+        @onStart={{action this.onStart}}
+        @onMove={{action this.onMove}}
+        @onEnd={{action this.onEnd}}
       >
-        <ul class="list-group">
-          <li data-testid="one" class="list-group-item">Item 1</li>
-          <li data-testid="two" class="list-group-item">Item 2</li>
-          <li data-testid="three" class="list-group-item">Item 3</li>
-          <li data-testid="four" class="list-group-item">Item 4</li>
-          <li data-testid="five" class="list-group-item">Item 5</li>
-        </ul>
+        <div data-testid="one" class="list-group-item">Item 1</div>
+        <div data-testid="two" class="list-group-item">Item 2</div>
+        <div data-testid="three" class="list-group-item">Item 3</div>
+        <div data-testid="four" class="list-group-item">Item 4</div>
+        <div data-testid="five" class="list-group-item">Item 5</div>
       </SortableJs>
     `);
 
-    const listItemOne = find('li[data-testid="one"]');
-    const listItemFour = find('li[data-testid="four"]');
+    const listItemOne = find('div[data-testid="one"]');
+    const listItemFour = find('div[data-testid="four"]');
 
     await simulateDrag(listItemOne, listItemFour);
 
     const listItems = document.querySelector('.list-group').children;
-    assert.equal(listItemOne, listItems[3]);
+    assert.equal(listItemOne, listItems[3], 'list item was moved');
   });
 
   test('it moves and element from one list to another', async function (assert) {
@@ -59,34 +58,32 @@ module('Integration | Component | sortable-js', function(hooks) {
 
     await render(hbs`
       <SortableJs
+        class="list-group-a"
         @options={{hash animation=150 ghostClass="ghost-class" group="test-group"}}
         @onRemove={{action this.onRemove}}
       >
-        <ul class="list-group-a">
-          <li data-testid="one-a" class="list-group-item">Item 1</li>
-          <li data-testid="two-a" class="list-group-item">Item 2</li>
-          <li data-testid="three-a" class="list-group-item">Item 3</li>
-          <li data-testid="four-a" class="list-group-item">Item 4</li>
-          <li data-testid="five-a" class="list-group-item">Item 5</li>
-        </ul>
+        <div data-testid="one-a" class="list-group-item">Item 1</div>
+        <div data-testid="two-a" class="list-group-item">Item 2</div>
+        <div data-testid="three-a" class="list-group-item">Item 3</div>
+        <div data-testid="four-a" class="list-group-item">Item 4</div>
+        <div data-testid="five-a" class="list-group-item">Item 5</div>
       </SortableJs>
 
       <SortableJs
+        class="list-group-b"
         @options={{hash animation=150 ghostClass="ghost-class" group="test-group"}}
         @onAdd={{action this.onAdd}}
       >
-        <ul class="list-group-b">
-          <li data-testid="one-b" class="list-group-item">Item 1</li>
-          <li data-testid="two-b" class="list-group-item">Item 2</li>
-          <li data-testid="three-b" class="list-group-item">Item 3</li>
-          <li data-testid="four-b" class="list-group-item">Item 4</li>
-          <li data-testid="five-b" class="list-group-item">Item 5</li>
-        </ul>
+        <div data-testid="one-b" class="list-group-item">Item 1</div>
+        <div data-testid="two-b" class="list-group-item">Item 2</div>
+        <div data-testid="three-b" class="list-group-item">Item 3</div>
+        <div data-testid="four-b" class="list-group-item">Item 4</div>
+        <div data-testid="five-b" class="list-group-item">Item 5</div>
       </SortableJs>
     `);
 
-    const itemA = find('li[data-testid="one-a"]');
-    const itemB = find('li[data-testid="four-b"]');
+    const itemA = find('div[data-testid="one-a"]');
+    const itemB = find('div[data-testid="four-b"]');
 
     await simulateDrag(itemA, itemB);
 
@@ -104,22 +101,22 @@ module('Integration | Component | sortable-js', function(hooks) {
 
     await render(hbs`
       <SortableJs
+        class="list-group-a"
         @options={{hash
           animation=150
           ghostClass="ghost-class"
           group=(hash name="shared" pull="clone")
         }}
       >
-        <ul class="list-group-a">
-          <li data-testid="one-a" class="list-group-item">Item 1</li>
-          <li data-testid="two-a" class="list-group-item">Item 2</li>
-          <li data-testid="three-a" class="list-group-item">Item 3</li>
-          <li data-testid="four-a" class="list-group-item">Item 4</li>
-          <li data-testid="five-a" class="list-group-item">Item 5</li>
-        </ul>
+        <div data-testid="one-a" class="list-group-item">Item 1</div>
+        <div data-testid="two-a" class="list-group-item">Item 2</div>
+        <div data-testid="three-a" class="list-group-item">Item 3</div>
+        <div data-testid="four-a" class="list-group-item">Item 4</div>
+        <div data-testid="five-a" class="list-group-item">Item 5</div>
       </SortableJs>
 
       <SortableJs
+        class="list-group-b"
         @options={{hash
           animation=150
           ghostClass="ghost-class"
@@ -127,18 +124,16 @@ module('Integration | Component | sortable-js', function(hooks) {
         }}
         @onClone={{action this.onClone}}
       >
-        <ul class="list-group-b">
-          <li data-testid="one-b" class="list-group-item">Item 1</li>
-          <li data-testid="two-b" class="list-group-item">Item 2</li>
-          <li data-testid="three-b" class="list-group-item">Item 3</li>
-          <li data-testid="four-b" class="list-group-item">Item 4</li>
-          <li data-testid="five-b" class="list-group-item">Item 5</li>
-        </ul>
+        <div data-testid="one-b" class="list-group-item">Item 1</div>
+        <div data-testid="two-b" class="list-group-item">Item 2</div>
+        <div data-testid="three-b" class="list-group-item">Item 3</div>
+        <div data-testid="four-b" class="list-group-item">Item 4</div>
+        <div data-testid="five-b" class="list-group-item">Item 5</div>
       </SortableJs>
     `);
 
-    const itemA = find('li[data-testid="one-a"]');
-    const itemB = find('li[data-testid="four-b"]');
+    const itemA = find('div[data-testid="one-a"]');
+    const itemB = find('div[data-testid="four-b"]');
 
     await simulateDrag(itemA, itemB);
 
@@ -179,30 +174,29 @@ module('Integration | Component | sortable-js', function(hooks) {
     // Template block usage:
     await render(hbs`
       <SortableJs
+        class="list-group"
         @options={{options}}
         @onChoose={{action onChoose}}
         @onStart={{action onStart}}
         @onMove={{action onMove}}
         @onEnd={{action onEnd}}
       >
-        <ul class="list-group">
-          <li data-testid="one" class="list-group-item">Item 1</li>
-          <li data-testid="two" class="list-group-item">Item 2</li>
-          <li data-testid="three" class="list-group-item">Item 3</li>
-          <li data-testid="four" class="list-group-item">Item 4</li>
-          <li data-testid="five" class="list-group-item">Item 5</li>
-        </ul>
+        <div data-testid="one" class="list-group-item">Item 1</div>
+        <div data-testid="two" class="list-group-item">Item 2</div>
+        <div data-testid="three" class="list-group-item">Item 3</div>
+        <div data-testid="four" class="list-group-item">Item 4</div>
+        <div data-testid="five" class="list-group-item">Item 5</div>
       </SortableJs>
     `);
 
-    const listItemOne = find('li[data-testid="one"]');
-    const listItemFour = find('li[data-testid="four"]');
-    const listItemTwo = find('li[data-testid="two"]');
+    const listItemOne = find('div[data-testid="one"]');
+    const listItemFour = find('div[data-testid="four"]');
+    const listItemTwo = find('div[data-testid="two"]');
 
     await simulateDrag(listItemOne, listItemFour);
 
     const listItems = document.querySelector('.list-group').children;
-    assert.equal(listItemOne, listItems[3]);
+    assert.equal(listItemOne, listItems[3], 'dragged successful');
 
     options = {
       animation: 100,
@@ -211,6 +205,8 @@ module('Integration | Component | sortable-js', function(hooks) {
 
     this.set('options', options);
 
-    await simulateDrag(listItemTwo, listItemOne);
+    await new Promise((resolve) => setTimeout(() => resolve(), 1000));
+
+    await simulateDrag(listItemTwo, listItemOne)
   });
 });

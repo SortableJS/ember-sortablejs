@@ -7,54 +7,50 @@
 <div class="row">
   <div class="col">
     <SortableJs
-      @options={{hash animation=150 ghostClass="ghost-class" group="shared" sort=fasle}}
+      class="list-group"
+      @options={{hash animation=150 ghostClass="ghost-class" group="shared" sort=false}}
     >
-      <ul class="list-group">
-        <li data-testid="one" class="list-group-item">Item 1</li>
-        <li data-testid="two" class="list-group-item">Item 2</li>
-        <li data-testid="three" class="list-group-item">Item 3</li>
-        <li data-testid="four" class="list-group-item">Item 4</li>
-        <li data-testid="five" class="list-group-item">Item 5</li>
-      </ul>
+      <div data-testid="one" class="list-group-item">Item 1</div>
+      <div data-testid="two" class="list-group-item">Item 2</div>
+      <div data-testid="three" class="list-group-item">Item 3</div>
+      <div data-testid="four" class="list-group-item">Item 4</div>
+      <div data-testid="five" class="list-group-item">Item 5</div>
     </SortableJs>
     <br>
     <SortableJs
-      @options={{hash animation=150 ghostClass="ghost-class" group="shared" sort=fasle}}
+      class="list-group"
+      @options={{hash animation=150 ghostClass="ghost-class" group="shared" sort=false}}
     >
-      <ul class="list-group">
-        <li data-testid="one" class="list-group-item bg-yellow">Item 1</li>
-        <li data-testid="two" class="list-group-item bg-yellow">Item 2</li>
-        <li data-testid="three" class="list-group-item bg-yellow">Item 3</li>
-        <li data-testid="four" class="list-group-item bg-yellow">Item 4</li>
-        <li data-testid="five" class="list-group-item bg-yellow">Item 5</li>
-      </ul>
+      <div data-testid="one" class="list-group-item bg-yellow">Item 1</div>
+      <div data-testid="two" class="list-group-item bg-yellow">Item 2</div>
+      <div data-testid="three" class="list-group-item bg-yellow">Item 3</div>
+      <div data-testid="four" class="list-group-item bg-yellow">Item 4</div>
+      <div data-testid="five" class="list-group-item bg-yellow">Item 5</div>
     </SortableJs>
   </div>
   <div class="col">
     <pre>
       <code>
         &lt;SortableJs
+          class="list-group"
           @options=&#123;&#123;hash animation=150 ghostClass="ghost-class" group="shared" sort=fasle&#125;&#125;
         &gt;
-          &lt;ul class="list-group"&gt;
-            &lt;li class="list-group-item">Item 1&lt;/li&gt;
-            &lt;li class="list-group-item">Item 2&lt;/li&gt;
-            &lt;li class="list-group-item">Item 3&lt;/li&gt;
-            &lt;li class="list-group-item">Item 4&lt;/li&gt;
-            &lt;li class="list-group-item">Item 5&lt;/li&gt;
-          &lt;/ul&gt;
+          &lt;div class="list-group-item">Item 1&lt;/div&gt;
+          &lt;div class="list-group-item">Item 2&lt;/div&gt;
+          &lt;div class="list-group-item">Item 3&lt;/div&gt;
+          &lt;div class="list-group-item">Item 4&lt;/div&gt;
+          &lt;div class="list-group-item">Item 5&lt;/div&gt;
         &lt;/SortableJs&gt;
 
         &lt;SortableJs
+          class="list-group"
           @options=&#123;&#123;hash animation=150 ghostClass="ghost-class" group="shared" sort=fasle&#125;&#125;
         &gt;
-          &lt;ul class="list-group"&gt;
-            &lt;li class="list-group-item">Item 1&lt;/li&gt;
-            &lt;li class="list-group-item">Item 2&lt;/li&gt;
-            &lt;li class="list-group-item">Item 3&lt;/li&gt;
-            &lt;li class="list-group-item">Item 4&lt;/li&gt;
-            &lt;li class="list-group-item">Item 5&lt;/li&gt;
-          &lt;/ul&gt;
+          &lt;div class="list-group-item">Item 1&lt;/div&gt;
+          &lt;div class="list-group-item">Item 2&lt;/div&gt;
+          &lt;div class="list-group-item">Item 3&lt;/div&gt;
+          &lt;div class="list-group-item">Item 4&lt;/div&gt;
+          &lt;div class="list-group-item">Item 5&lt;/div&gt;
         &lt;/SortableJs&gt;
       </code>
     </pre>

@@ -1,9 +1,10 @@
 import Controller from '@ember/controller';
-import { equal } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
-export default Controller.extend({
-  router: service(),
+export default class ApplicationController extends Controller {
+  @service router;
 
-  inHomeRoute: equal('router.currentRouteName', 'index'),
-});
+  get inHomeRoute() {
+    return this.router.currentRouteName === 'index';
+  }
+}

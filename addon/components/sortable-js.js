@@ -1,19 +1,12 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import Sortable from 'sortablejs';
 import { bind } from '@ember/runloop';
-import diffAttrs from 'ember-diff-attrs';
-import layout from '../templates/components/sortable-js';
+import { action } from '@ember/object';
 
-const { freeze } = Object;
+export default class SortableJsComponent extends Component {
+  sortable = null;
 
-export default Component.extend({
-  layout,
-
-  classNames: ['ember-sortable-js'],
-
-  options: null,
-
-  events: freeze([
+  #events = [
     'onChoose',
     'onUnchoose',
     'onStart',
@@ -26,59 +19,52 @@ export default Component.extend({
     'onClone',
     'onChange',
     'scrollFn',
-    'onSetData',
     'setData',
     'onFilter',
-  ]),
+  ];
 
-  didReceiveAttrs: diffAttrs('options', function(changedAttrs, ...args) {
-    this._super(...args);
-
-    if(changedAttrs && changedAttrs.options) {
-      const options = changedAttrs.options.pop();
-
-      for (let [key, value] of Object.entries(options)) {
-        this.setOptions(key, value);
-      }
+  @action
+  setOptions() {
+    for (let [key, value] of Object.entries(this.args.options)) {
+      this.setOption(key, value);
     }
-  }),
+  }
 
-  didInsertElement() {
-    this._super(...arguments);
-
-    const el = this.element.firstElementChild;
+  /**
+   *
+   * @param {HTMLElement} element
+   */
+  @action
+  didInsert(element) {
     const defaults = {};
-    const options = Object.assign({}, defaults, this.options);
+    const options = Object.assign({}, defaults, this.args.options);
 
-    this.sortable = Sortable.create(el, options);
+    this.sortable = Sortable.create(element, options);
     this.setupEventHandlers();
-  },
+  }
 
-  willDestroyElement() {
+  willDestroy() {
     this.sortable.destroy();
-    this._super(...arguments);
-  },
+  }
 
   setupEventHandlers() {
-    this.events.forEach(eventName => {
-      const action = this[eventName];
+    this.#events.forEach(eventName => {
+      const action = this.args[eventName];
       if (typeof action === 'function') {
         this.sortable.option(eventName, bind(this, 'performExternalAction', eventName));
       }
     });
-  },
+  }
 
   performExternalAction(actionName, ...args) {
-    let action = this[actionName];
-
-    action = (action === 'onSetData') ? 'setData' : action;
+    let action = this.args[actionName];
 
     if (typeof action === 'function') {
       action(...args, this.sortable);
     }
-  },
+  }
 
-  setOptions(option, value) {
+  setOption(option, value) {
     this.sortable.option(option, value);
-  },
-});
+  }
+}
