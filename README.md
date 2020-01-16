@@ -65,7 +65,6 @@ The events:
 - `onClone`
 - `onChange`
 - `scrollFn`
-- `onSetData`
 - `setData`
 - `onFilter`
 
@@ -74,7 +73,39 @@ All actions get the events as described in the SortableJS docs as well as the so
 ```js
   onChoose(evt, sortable) {...}
 ```
+Migrating from 1.x
+------------------------------------------------------------------------------
+- `onSetData` is no longer suported. Rename argument to `setData`.
+- `<SortableJs>` no longer expects a wrapped list. Instead the addon itself will act as the sortable list container.
 
+v1
+```html
+<SortableJs
+  @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
+>
+  <ul class="list-group">
+    <li class="list-group-item">Item 1</li>
+    <li class="list-group-item">Item 2</li>
+    <li class="list-group-item">Item 3</li>
+    <li class="list-group-item">Item 4</li>
+    <li class="list-group-item">Item 5</li>
+  </ul>
+</SortableJs>
+```
+
+v2
+```html
+<SortableJs
+  class="list-group"
+  @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
+>
+  <div class="list-group-item">Item 1</div>
+  <div class="list-group-item">Item 2</div>
+  <div class="list-group-item">Item 3</div>
+  <div class="list-group-item">Item 4</div>
+  <div class="list-group-item">Item 5</div>
+</SortableJs>
+```
 License
 ------------------------------------------------------------------------------
 
