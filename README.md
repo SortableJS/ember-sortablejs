@@ -67,6 +67,7 @@ The events:
 - `scrollFn`
 - `setData`
 - `onFilter`
+- `onSpill`
 
 Should be in the component signature as closure actions.
 All actions get the events as described in the SortableJS docs as well as the sortable instance.

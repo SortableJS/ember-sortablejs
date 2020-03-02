@@ -21,6 +21,7 @@ export default class SortableJsComponent extends Component {
     'scrollFn',
     'setData',
     'onFilter',
+    'onSpill',
   ];
 
   @action
