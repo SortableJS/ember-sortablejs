@@ -242,8 +242,6 @@ module('Integration | Component | sortable-js', function(hooks) {
     const draggableElement = find('div[data-testid="four"]');
     const spillElement = find('.spill-element');
 
-    console.log('spillElement', spillElement)
-
     await simulateDrag(draggableElement, spillElement);
   });
 });
