@@ -209,4 +209,41 @@ module('Integration | Component | sortable-js', function(hooks) {
 
     await simulateDrag(listItemTwo, listItemOne)
   });
+
+  test('calls onSpill when dropped outside the sortable regioin', async function(assert) {
+    this.onSpill = function() {
+      assert.ok(true, 'onSpill was invoked');
+      done();
+    };
+    this.options = {
+      animation: 100,
+      ghostClass: 'foo',
+      revertOnSpill: true,
+    };
+
+    const done = assert.async();
+
+    await render(hbs`
+      <div class="spill-element"></div>
+      <br>
+      <SortableJs
+        class="list-group"
+        @options={{this.options}}
+        @onSpill={{this.onSpill}}
+      >
+        <div data-testid="one" class="list-group-item">Item 1</div>
+        <div data-testid="two" class="list-group-item">Item 2</div>
+        <div data-testid="three" class="list-group-item">Item 3</div>
+        <div data-testid="four" class="list-group-item">Item 4</div>
+        <div data-testid="five" class="list-group-item">Item 5</div>
+      </SortableJs>
+    `);
+
+    const draggableElement = find('div[data-testid="four"]');
+    const spillElement = find('.spill-element');
+
+    console.log('spillElement', spillElement)
+
+    await simulateDrag(draggableElement, spillElement);
+  });
 });
