@@ -1,8 +1,10 @@
-<div
-  class="ember-sortable-js"
-  {{did-insert this.didInsert}}
-  {{did-update this.setOptions @options}}
-  ...attributes
->
-  {{yield this.sortable}}
-</div>
+{{#let (element this.element) as |Element|}}
+  <Element
+    class="ember-sortable-js"
+    {{did-insert this.didInsert}}
+    {{did-update this.setOptions @options}}
+    ...attributes
+  >
+    {{yield this.internalList}}
+  </Element>
+{{/let}}
