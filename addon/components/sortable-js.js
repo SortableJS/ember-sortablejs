@@ -9,6 +9,7 @@ import { inject as service } from '@ember/service';
 
 export default class SortableJsComponent extends Component {
   @service dragStore;
+
   @tracked list = [];
 
   #sortableContainer = null;
@@ -38,8 +39,12 @@ export default class SortableJsComponent extends Component {
   }
 
   get internalList() {
+    return [...this.list];
+  }
+
+  get mappedList() {
     // fix identity diffing
-    return this.list.map((item, i) => ({ id: i += 1, item }))
+    return this.internalList.map((item, i) => ({ id: i += 1, value: item }))
   }
 
   @action
@@ -62,10 +67,15 @@ export default class SortableJsComponent extends Component {
 
     next(this, () => {
       this.#sortableInstance = Sortable.create(element, options);
-      this.list = [...(this.args.items || [])];
       this.setupEventHandlers();
       this.setupInternalEventHandlers();
+      this.setList();
     });
+  }
+
+  @action
+  setList() {
+    this.list = [...(this.args.items || [])];
   }
 
   willDestroy() {
@@ -74,8 +84,8 @@ export default class SortableJsComponent extends Component {
 
   onUpdate(evt) {
     const {
-      oldDraggableIndex,
       newDraggableIndex,
+      oldDraggableIndex,
     } = evt;
 
     this.list = move(this.list, oldDraggableIndex, newDraggableIndex);
@@ -87,12 +97,15 @@ export default class SortableJsComponent extends Component {
       oldDraggableIndex,
     } = evt;
 
-    this.list = removeFrom(this.list, oldDraggableIndex);
+    if (evt.pullMode !== 'clone') {
+      this.list = removeFrom(this.list, oldDraggableIndex);
+    }
+
     this.args?.onRemove?.(evt);
   }
 
   onAdd(evt) {
-    // evt.item.remove(); // without this DOM is wrong
+    evt.item.remove(); // without this DOM is wrong
     const {
       oldDraggableIndex,
       newDraggableIndex,

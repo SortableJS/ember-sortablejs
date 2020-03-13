@@ -8,33 +8,36 @@
   <div class="col">
     <SortableJs
       class="list-group"
-      @items={{array "one-a" "two-a" "three-a" "four-a" "five-a"}}
+      @items={{this.sortedDevList}}
       @options={{hash animation=150 ghostClass="ghost-class" group="shared"}}
       @onRemove={{this.onRemove}}
       @onEnd={{this.onEnd}}
+      @onSort={{this.onSort}}
       as |list|
     >
       {{log 'running a' list}}
-      {{#each list as |item index| }}
-        <div data-list-item={{index}} class="list-group-item">{{item.item}}</div>
-      {{/each}}
-    </SortableJs>
-    <br>
-    <SortableJs
-      class="list-group"
-      @items={{array "one-b" "two-b" "three-b" "four-b" "five-b"}}
-      @options={{hash animation=150 ghostClass="ghost-class" group="shared"}}
-      @onAdd={{fn this.onAdd}}
-      as |list|
-    >
-      {{log 'running b' list}}
-      {{#each list as |item index| }}
-        <div data-list-item={{index}} class="list-group-item bg-yellow">{{item.item}}</div>
+      {{#each list as |item| }}
+        <div data-record-id={{item.value.id}} class="list-group-item">{{item.value.name}}</div>
       {{/each}}
     </SortableJs>
   </div>
   <div class="col">
-    <h1>Code</h1>
+    <SortableJs
+      class="list-group"
+      @items={{this.sortedPmList}}
+      @options={{hash animation=150 ghostClass="ghost-class" group="shared"}}
+      @onAdd={{fn this.onAdd}}
+      @onEnd={{this.onEnd}}
+      @onSort={{this.onSort}}
+      as |list|
+    >
+      {{log 'running b' list}}
+      {{#each list as |item| }}
+        <div data-record-id={{item.value.id}} class="list-group-item bg-yellow">{{item.value.name}}</div>
+      {{/each}}
+    </SortableJs>
+  </div>
+  <div class="col">
     <script type="application/javascript" src="https://gist.github.com/lvegerano/b3118b59c5bb32fe928f957444ef6203.js"></script>
   </div>
 </div>
