@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import Sortable from 'sortablejs';
-import { bind, scheduleOnce } from '@ember/runloop';
+import { bind, next } from '@ember/runloop';
 import { action } from '@ember/object';
-import { next } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 import { move, insertAt, removeFrom } from 'ember-sortablejs/utils/array-utils';
 import { inject as service } from '@ember/service';
@@ -12,9 +11,11 @@ export default class SortableJsComponent extends Component {
 
   @tracked list = [];
 
+  cachedList = null;
+  hasUpdatedList = false; // Used to prevent unwanted renders. Probably there's a better way to do this.
   #sortableContainer = null;
-  #sortableInstance = null;
-  #internalEvents = [
+  sortableInstance = null;
+  internalEvents = [
     'onStart',
     'onAdd',
     'onUpdate',
@@ -66,7 +67,7 @@ export default class SortableJsComponent extends Component {
     this.#sortableContainer = element;
 
     next(this, () => {
-      this.#sortableInstance = Sortable.create(element, options);
+      this.sortableInstance = Sortable.create(element, options);
       this.setupEventHandlers();
       this.setupInternalEventHandlers();
       this.setList();
@@ -78,8 +79,19 @@ export default class SortableJsComponent extends Component {
     this.list = [...(this.args.items || [])];
   }
 
+  @action
+  cancelDnD() {
+    if (this.cachedList) {
+      this.list = [...this.cachedList];
+      this.cachedList = null;
+      this.dragStore.dragAddInstance?.cancelDnD();
+    }
+    this.dragStore.reset();
+  }
+
   willDestroy() {
-    this.#sortableInstance.destroy();
+    this.sortableInstance.destroy();
+    this.dragStore.reset();
   }
 
   onUpdate(evt) {
@@ -88,7 +100,8 @@ export default class SortableJsComponent extends Component {
       oldDraggableIndex,
     } = evt;
 
-    this.list = move(this.list, oldDraggableIndex, newDraggableIndex);
+    this.sync(evt.item, move(this.list, oldDraggableIndex, newDraggableIndex));
+    this.hasUpdatedList = true;
     this.args?.onUpdate?.(evt);
   }
 
@@ -98,57 +111,66 @@ export default class SortableJsComponent extends Component {
     } = evt;
 
     if (evt.pullMode !== 'clone') {
-      this.list = removeFrom(this.list, oldDraggableIndex);
+      this.sync(evt.item, removeFrom(this.list, oldDraggableIndex));
+      this.hasUpdatedList = true;
     }
 
     this.args?.onRemove?.(evt);
   }
 
   onAdd(evt) {
-    evt.item.remove(); // without this DOM is wrong
+    this.cachedList = [...this.list];
+    this.dragStore.dragAddInstance = this;
     const {
       oldDraggableIndex,
       newDraggableIndex,
     } = evt;
-    const oldItem = this.dragStore.dragging.list[oldDraggableIndex];
-    this.list = insertAt(this.list, newDraggableIndex, oldItem)
+    const oldItem = this.dragStore.dragStartInstance.list[oldDraggableIndex];
+
+    this.sync(evt.item, insertAt(this.list, newDraggableIndex, oldItem));
     this.args?.onAdd?.(evt);
   }
 
   onStart(evt) {
-    this.dragStore.dragging = this;
+    this.cachedList = [...this.list];
+    this.dragStore.dragStartInstance = this;
     this.args?.onStart?.(evt);
   }
 
-  onEnd(evt) {
-    this.args?.onEnd?.(evt);
-    this.dragStore.dragging = null;
+  onEnd(evt, ) {
+    if (!this.hasUpdatedList) {
+      this.sync(evt.item, this.list);
+    }
+
+    this.args?.onEnd?.(evt, this.cancelDnD);
+    this.hasUpdatedList = false;
+  }
+
+  sync(element, changedArray) {
+    element.remove();
+    this.list = [...changedArray];
   }
 
   setupEventHandlers() {
     this.#events.forEach(eventName => {
       const action = this.args[eventName];
       if (typeof action === 'function') {
-        this.#sortableInstance.option(eventName, bind(this, 'performExternalAction', eventName));
+        this.sortableInstance.option(eventName, bind(this, 'performExternalAction', eventName));
       }
     });
   }
 
   setupInternalEventHandlers() {
-    this.#internalEvents.forEach(eventName => {
-      this.#sortableInstance.option(eventName, bind(this, this[eventName]));
+    this.internalEvents.forEach(eventName => {
+      this.sortableInstance.option(eventName, bind(this, this[eventName]));
     });
   }
 
   performExternalAction(actionName, ...args) {
-    let action = this.args[actionName];
-
-    if (typeof action === 'function') {
-      action(...args, this.sortable);
-    }
+    this.args[actionName]?.(...args)
   }
 
   setOption(option, value) {
-    this.#sortableInstance.option(option, value);
+    this.sortableInstance.option(option, value);
   }
 }

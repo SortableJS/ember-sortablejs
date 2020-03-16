@@ -14,4 +14,5 @@ Router.map(function() {
   this.route('handle');
   this.route('filter');
   this.route('thresholds');
+  this.route('cancelable');
 });

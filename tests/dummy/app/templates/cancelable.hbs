@@ -41,3 +41,8 @@
     <script type="application/javascript" src="https://gist.github.com/lvegerano/b3118b59c5bb32fe928f957444ef6203.js"></script>
   </div>
 </div>
+<div class="row">
+  {{#if this.cancelCB}}
+    <button type="button" {{on "click" this.cancelDrag}}>Cancel</button>
+  {{/if}}
+</div>
