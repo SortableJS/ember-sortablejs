@@ -96,7 +96,7 @@ module('Integration | Component | sortable-js', function(hooks) {
         as |list|
       >
         {{#each list as |item index| }}
-          <div data-list-item={{index}} class="list-item">{{item}}</div>
+          <div data-list-item={{index}} class="list-item">{{item.value}}</div>
         {{/each}}
       </SortableJs>
     `);
@@ -148,7 +148,7 @@ module('Integration | Component | sortable-js', function(hooks) {
         as |list|
       >
         {{#each list as |item index| }}
-          <div data-list-item={{index}} class="list-item">{{item}}</div>
+          <div data-list-item={{index}} class="list-item">{{item.value}}</div>
         {{/each}}
       </SortableJs>
       <br>
@@ -160,18 +160,18 @@ module('Integration | Component | sortable-js', function(hooks) {
         as |list|
       >
         {{#each list as |item index| }}
-          <div data-list-item={{index}} class="list-item">{{item}}</div>
+          <div data-list-item={{index}} class="list-item">{{item.value}}</div>
         {{/each}}
       </SortableJs>
     `);
 
-    const listAItemFive = find('.list-a > div[data-list-item="4"]');
-    const listBItemOne = find('.list-b > div[data-list-item="1"]');
+    const listAItemFive = find('.list-a > div[data-list-item="2"]');
+    const listBItemOne = find('.list-b > div[data-list-item="2"]');
 
     await simulateDrag(listAItemFive, listBItemOne);
 
-    const listAOrder = Array.from(findAll('list-a > div[data-list-item]')).map(node => node.innerText);
-    const listBOrder = Array.from(findAll('list-b > div[data-list-item]')).map(node => node.innerText);
+    const listAOrder = Array.from(findAll('.list-a > div[data-list-item]')).map(node => node.innerText);
+    const listBOrder = Array.from(findAll('.list-b > div[data-list-item]')).map(node => node.innerText);
 
     const expectedListAOrder = [
       'item one',
