@@ -23,24 +23,10 @@
       as |list|
     >
       {{#each list as |item index| }}
-        <div data-list-item={{index}} class="list-group-item">{{item}}</div>
+        <div data-list-item={{index}} class="list-group-item">{{item.value}}</div>
       {{/each}}
     </SortableJs>
   </div>
   <div class="col">
-    <pre>
-      <code>
-        &lt;SortableJs
-          class="list-group"
-          @options=&#123;&#123;hash animation=150 ghostClass="ghost-class"&#125;&#125;
-        &gt;
-          &lt;div class="list-group-item">Item 1&lt;/div&gt;
-          &lt;div class="list-group-item">Item 2&lt;/div&gt;
-          &lt;div class="list-group-item">Item 3&lt;/div&gt;
-          &lt;div class="list-group-item">Item 4&lt;/div&gt;
-          &lt;div class="list-group-item">Item 5&lt;/div&gt;
-        &lt;/SortableJs&gt;
-      </code>
-    </pre>
   </div>
 </div>

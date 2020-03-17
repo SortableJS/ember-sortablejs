@@ -20,17 +20,15 @@ export default class SharedController extends Controller {
 
   constructor() {
     super(...arguments);
-    setTimeout(() => {
-      const all = [
-        { name: 'Luis', type: 'dev' },
-        { name: 'Jaden', type: 'dev' },
-        { name: 'Gustavo', type: 'dev' },
-        { name: 'Lance', type: 'pm' },
-        { name: 'Britni', type: 'pm' },
-        { name: 'Kelly', type: 'pm' }
-      ];
-      this.list = all.map((person, i) => new Employee(i += 1, person));
-    }, 5000);
+    const all = [
+      { name: 'Luis', type: 'dev' },
+      { name: 'Jaden', type: 'dev' },
+      { name: 'Gustavo', type: 'dev' },
+      { name: 'Lance', type: 'pm' },
+      { name: 'Britni', type: 'pm' },
+      { name: 'Kelly', type: 'pm' }
+    ];
+    this.list = all.map((person, i) => new Employee(i += 1, person));
   }
 
   get devList() {
