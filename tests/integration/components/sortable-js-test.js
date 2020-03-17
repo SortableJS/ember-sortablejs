@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, findAll } from '@ember/test-helpers';
 import { simulateDrag } from 'ember-sortablejs/test-support/dndsimulator';
@@ -119,7 +119,7 @@ module('Integration | Component | sortable-js', function(hooks) {
     assert.deepEqual(actualOrder, expectedOrder);
   });
 
-  test('it moves and element from one list to another', async function (assert) {
+  skip('it moves and element from one list to another', async function (assert) {
     const done = assert.async();
     this.onChoose = (event) => assert.ok(event, 'onChoose');
     this.onStart = (event) => assert.ok(event, 'onStart');

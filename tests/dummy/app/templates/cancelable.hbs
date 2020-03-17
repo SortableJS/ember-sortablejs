@@ -15,7 +15,6 @@
       @onSort={{fn this.onSort 'A'}}
       as |list|
     >
-      {{log 'running a' list}}
       {{#each list as |item| }}
         <div data-record-id={{item.value.id}} class="list-group-item">{{item.value.name}}</div>
       {{/each}}
@@ -31,7 +30,6 @@
       @onSort={{fn this.onSort 'B'}}
       as |list|
     >
-      {{log 'running b' list}}
       {{#each list as |item| }}
         <div data-record-id={{item.value.id}} class="list-group-item bg-yellow">{{item.value.name}}</div>
       {{/each}}
