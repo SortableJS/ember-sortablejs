@@ -39,6 +39,8 @@ jobs:
         # - npm run lint:hbs
         # - npm run lint:js
         - npm test
+        - npm start && wait-on http://localhost:4200
+        - cypress run
 
     - stage: "Additional Tests"
       name: "Floating Dependencies"
