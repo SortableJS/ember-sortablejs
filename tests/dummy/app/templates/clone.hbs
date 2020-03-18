@@ -8,71 +8,37 @@
   <div class="col">
     <SortableJs
       class="list-group"
+      @items={{array "one-a" "two-a" "three-a" "four-a" "five-a"}}
       @options={{hash
         animation=150
         ghostClass="ghost-class"
         group=(hash name="shared" pull="clone")
       }}
       @onClone={{fn this.onClone}}
+      as |list|
     >
-      <div data-testid="one" class="list-group-item">Item 1</div>
-      <div data-testid="two" class="list-group-item">Item 2</div>
-      <div data-testid="three" class="list-group-item">Item 3</div>
-      <div data-testid="four" class="list-group-item">Item 4</div>
-      <div data-testid="five" class="list-group-item">Item 5</div>
+      {{#each list as |item index| }}
+        <div data-list-item={{index}} class="list-group-item">{{item.item}}</div>
+      {{/each}}
     </SortableJs>
     <br>
     <SortableJs
       class="list-group"
+      @items={{array "one-b" "two-b" "three-b" "four-b" "five-b"}}
       @options={{hash
         animation=150
         ghostClass="ghost-class"
         group=(hash name="shared" pull="clone")
       }}
       @onClone={{fn this.onClone}}
+      as |list|
     >
-      <div data-testid="one" class="list-group-item bg-yellow">Item 1</div>
-      <div data-testid="two" class="list-group-item bg-yellow">Item 2</div>
-      <div data-testid="three" class="list-group-item bg-yellow">Item 3</div>
-      <div data-testid="four" class="list-group-item bg-yellow">Item 4</div>
-      <div data-testid="five" class="list-group-item bg-yellow">Item 5</div>
+      {{#each list as |item index| }}
+        <div data-list-item={{index}} class="list-group-item bg-yellow">{{item.item}}</div>
+      {{/each}}
     </SortableJs>
   </div>
   <div class="col">
-    <pre>
-      <code>
-        &lt;SortableJs
-          class="list-group"
-          @options=&#123;&#123;hash
-            animation=150
-            ghostClass="ghost-class"
-            group=(hash name="shared" pull="clone")
-          &#125;&#125;
-          @onRemove=&#123;&#123;fn this.onRemove&#125;&#125;
-        &gt;
-          &lt;div class="list-group-item">Item 1&lt;/div&gt;
-          &lt;div class="list-group-item">Item 2&lt;/div&gt;
-          &lt;div class="list-group-item">Item 3&lt;/div&gt;
-          &lt;div class="list-group-item">Item 4&lt;/div&gt;
-          &lt;div class="list-group-item">Item 5&lt;/div&gt;
-        &lt;/SortableJs&gt;
-
-        &lt;SortableJs
-          class="list-group"
-          @options=&#123;&#123;hash
-            animation=150
-            ghostClass="ghost-class"
-            group=(hash name="shared" pull="clone")
-          &#125;&#125;
-          @onAdd=&#123;&#123;fn this.onAdd&#125;&#125;
-        &gt;
-          &lt;div class="list-group-item">Item 1&lt;/div&gt;
-          &lt;div class="list-group-item">Item 2&lt;/div&gt;
-          &lt;div class="list-group-item">Item 3&lt;/div&gt;
-          &lt;div class="list-group-item">Item 4&lt;/div&gt;
-          &lt;div class="list-group-item">Item 5&lt;/div&gt;
-        &lt;/SortableJs&gt;
-      </code>
-    </pre>
+    <div class="clone-gist"></div>
   </div>
 </div>

@@ -8,39 +8,25 @@
   <div class="col">
     <SortableJs
       class="list-group"
+      @items={{array "one" "two" "three" "four" "five"}}
       @options={{hash animation=150 ghostClass="ghost-class"}}
-      @onChoose={{fn this.onChoose}}
-      @onUnchoose={{fn this.onUnchoose}}
-      @onStart={{fn this.onStart}}
-      @onEnd={{fn this.onEnd}}
-      @onAdd={{fn this.onAdd}}
-      @onUpdate={{fn this.onUpdate}}
-      @onRemove={{fn this.onRemove}}
-      @onMove={{fn this.onMove}}
-      @onClone={{fn this.onClone}}
-      @onChange={{fn this.onChange}}
+      @onChoose={{this.onChoose}}
+      @onUnchoose={{this.onUnchoose}}
+      @onStart={{this.onStart}}
+      @onEnd={{this.onEnd}}
+      @onAdd={{this.onAdd}}
+      @onUpdate={{this.onUpdate}}
+      @onRemove={{this.onRemove}}
+      @onMove={{this.onMove}}
+      @onClone={{this.onClone}}
+      @onChange={{this.onChange}}
+      as |list|
     >
-      <div data-testid="one" class="list-group-item">Item 1</div>
-      <div data-testid="two" class="list-group-item">Item 2</div>
-      <div data-testid="three" class="list-group-item">Item 3</div>
-      <div data-testid="four" class="list-group-item">Item 4</div>
-      <div data-testid="five" class="list-group-item">Item 5</div>
+      {{#each list as |item index| }}
+        <div data-list-item={{index}} class="list-group-item">{{item.value}}</div>
+      {{/each}}
     </SortableJs>
   </div>
   <div class="col">
-    <pre>
-      <code>
-        &lt;SortableJs
-          class="list-group"
-          @options=&#123;&#123;hash animation=150 ghostClass="ghost-class"&#125;&#125;
-        &gt;
-          &lt;div class="list-group-item">Item 1&lt;/div&gt;
-          &lt;div class="list-group-item">Item 2&lt;/div&gt;
-          &lt;div class="list-group-item">Item 3&lt;/div&gt;
-          &lt;div class="list-group-item">Item 4&lt;/div&gt;
-          &lt;div class="list-group-item">Item 5&lt;/div&gt;
-        &lt;/SortableJs&gt;
-      </code>
-    </pre>
   </div>
 </div>

@@ -5,54 +5,43 @@
   </div>
 </div>
 <div class="row">
-  <div class="col">
+    <div class="col-1">
     <SortableJs
       class="list-group"
-      @options={{hash animation=150 ghostClass="ghost-class" group="shared" sort=false}}
+      @items={{array "one-a" "two-a" "three-a" "four-a" "five-a"}}
+      @options={{hash
+        animation=150
+        ghostClass="ghost-class"
+        group=(hash name="shared" pull="clone")
+      }}
+      @onClone={{this.onClone}}
+      as |list|
     >
-      <div data-testid="one" class="list-group-item">Item 1</div>
-      <div data-testid="two" class="list-group-item">Item 2</div>
-      <div data-testid="three" class="list-group-item">Item 3</div>
-      <div data-testid="four" class="list-group-item">Item 4</div>
-      <div data-testid="five" class="list-group-item">Item 5</div>
+      {{#each list as |item index| }}
+        <div data-list-item={{index}} class="list-group-item">{{item.item}}</div>
+      {{/each}}
     </SortableJs>
+    </div>
     <br>
+    <div class="col-1">
     <SortableJs
       class="list-group"
-      @options={{hash animation=150 ghostClass="ghost-class" group="shared" sort=false}}
+      @items={{array "one-b" "two-b" "three-b" "four-b" "five-b"}}
+      @options={{hash
+        animation=150
+        ghostClass="ghost-class"
+        group=(hash name="shared" pull="clone")
+      }}
+      @onClone={{this.onClone}}
+      as |list|
     >
-      <div data-testid="one" class="list-group-item bg-yellow">Item 1</div>
-      <div data-testid="two" class="list-group-item bg-yellow">Item 2</div>
-      <div data-testid="three" class="list-group-item bg-yellow">Item 3</div>
-      <div data-testid="four" class="list-group-item bg-yellow">Item 4</div>
-      <div data-testid="five" class="list-group-item bg-yellow">Item 5</div>
+      {{#each list as |item index| }}
+        <div data-list-item={{index}} class="list-group-item bg-yellow">{{item.item}}</div>
+      {{/each}}
     </SortableJs>
-  </div>
-  <div class="col">
-    <pre>
-      <code>
-        &lt;SortableJs
-          class="list-group"
-          @options=&#123;&#123;hash animation=150 ghostClass="ghost-class" group="shared" sort=fasle&#125;&#125;
-        &gt;
-          &lt;div class="list-group-item">Item 1&lt;/div&gt;
-          &lt;div class="list-group-item">Item 2&lt;/div&gt;
-          &lt;div class="list-group-item">Item 3&lt;/div&gt;
-          &lt;div class="list-group-item">Item 4&lt;/div&gt;
-          &lt;div class="list-group-item">Item 5&lt;/div&gt;
-        &lt;/SortableJs&gt;
+    </div>
+</div>
 
-        &lt;SortableJs
-          class="list-group"
-          @options=&#123;&#123;hash animation=150 ghostClass="ghost-class" group="shared" sort=fasle&#125;&#125;
-        &gt;
-          &lt;div class="list-group-item">Item 1&lt;/div&gt;
-          &lt;div class="list-group-item">Item 2&lt;/div&gt;
-          &lt;div class="list-group-item">Item 3&lt;/div&gt;
-          &lt;div class="list-group-item">Item 4&lt;/div&gt;
-          &lt;div class="list-group-item">Item 5&lt;/div&gt;
-        &lt;/SortableJs&gt;
-      </code>
-    </pre>
-  </div>
+<div class="col">
+  <div class="delete-gist"></div>
 </div>

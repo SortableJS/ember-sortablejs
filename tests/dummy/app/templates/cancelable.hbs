@@ -7,7 +7,7 @@
 <div class="row">
   <div class="col">
     <SortableJs
-      class="list-group list-a"
+      class="list-group"
       @items={{this.sortedDevList}}
       @options={{hash animation=150 ghostClass="ghost-class" group="shared"}}
       @onRemove={{fn this.onRemove 'A'}}
@@ -15,14 +15,14 @@
       @onSort={{fn this.onSort 'A'}}
       as |list|
     >
-      {{#each list as |item index| }}
-        <div data-list-item={{index}} class="list-group-item">{{item.value.name}}</div>
+      {{#each list as |item| }}
+        <div data-record-id={{item.value.id}} class="list-group-item">{{item.value.name}}</div>
       {{/each}}
     </SortableJs>
   </div>
   <div class="col">
     <SortableJs
-      class="list-group list-b"
+      class="list-group"
       @items={{this.sortedPmList}}
       @options={{hash animation=150 ghostClass="ghost-class" group="shared"}}
       @onAdd={{fn this.onAdd 'B'}}
@@ -30,12 +30,17 @@
       @onSort={{fn this.onSort 'B'}}
       as |list|
     >
-      {{#each list as |item index|}}
-        <div data-list-item={{index}} class="list-group-item bg-yellow">{{item.value.name}}</div>
+      {{#each list as |item| }}
+        <div data-record-id={{item.value.id}} class="list-group-item bg-yellow">{{item.value.name}}</div>
       {{/each}}
     </SortableJs>
   </div>
   <div class="col">
     <script type="application/javascript" src="https://gist.github.com/lvegerano/b3118b59c5bb32fe928f957444ef6203.js"></script>
   </div>
+</div>
+<div class="row">
+  {{#if this.cancelCB}}
+    <button type="button" {{on "click" this.cancelDrag}}>Cancel</button>
+  {{/if}}
 </div>
