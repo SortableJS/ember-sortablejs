@@ -80,6 +80,7 @@ Component API
 |:---|:---:|:---|
 | `@items`      | Array    | A list of the items to be managed by the addon |
 | `@options`    | Object   | A hash options supported by SortableJs|
+| `@tag`        | String   | The element to be used to render the list (default: "div")|
 | `@onChoose`   | Function | (SortablejsEvent) => {...} |
 | `@onUnchoose` | Function | (SortablejsEvent) => {...} |
 | `@onStart`    | Function | (SortablejsEvent) => {...} |
