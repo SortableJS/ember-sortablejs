@@ -67,7 +67,7 @@ I you have ideas on how to approach this better. Please open an issue 😄
 
 Caveats
 ------------------------------------------------------------------------------
-- Not SortableJS plugins work.
+- Not all SortableJS plugins work... yet.
 - While you could bypass `@items` I highly discourage since the library manipulates the DOM directly.
 
 Options
@@ -78,22 +78,23 @@ Component API
 ------------------------------------------------------------------------------
 |arg|type|description|
 |:---|:---:|:---|
-| `@items`| Array | A list of the items to be managed by the addon|
-| `@onChoose`   | Function | (SortablejsEvent) => {...}
-| `@onUnchoose` | Function | (SortablejsEvent) => {...}
-| `@onStart`    | Function | (SortablejsEvent) => {...}
-| `@onEnd`      | Function | (SortablejsEvent, cancelDnD) => {...}
-| `@onAdd`      | Function | (SortablejsEvent) => {...}
-| `@onUpdate`   | Function | (SortablejsEvent) => {...}
-| `@onSort`     | Function | (SortablejsEvent) => {...}
-| `@onRemove`   | Function | (SortablejsEvent) => {...}
-| `@onMove`     | Function | (SortablejsMoveEvent) => {...}
-| `@onClone`    | Function | (SortablejsEvent) => {...}
-| `@onChange`   | Function | (SortablejsEvent) => {...}
-| `@scrollFn`   | Function | (SortablejsEvent) => {...}
-| `@setData`    | Function | (SortablejsEvent) => {...}
-| `@onFilter`   | Function | (SortablejsEvent) => {...}
-| `@onSpill`    | Function | (SortablejsEvent) => {...}
+| `@items`      | Array    | A list of the items to be managed by the addon |
+| `@options`    | Object   | A hash options supported by SortableJs|
+| `@onChoose`   | Function | (SortablejsEvent) => {...} |
+| `@onUnchoose` | Function | (SortablejsEvent) => {...} |
+| `@onStart`    | Function | (SortablejsEvent) => {...} |
+| `@onEnd`      | Function | (SortablejsEvent, cancelDnD) => {...} |
+| `@onAdd`      | Function | (SortablejsEvent) => {...} |
+| `@onUpdate`   | Function | (SortablejsEvent) => {...} |
+| `@onSort`     | Function | (SortablejsEvent) => {...} |
+| `@onRemove`   | Function | (SortablejsEvent) => {...} |
+| `@onMove`     | Function | (SortablejsMoveEvent) => {...} |
+| `@onClone`    | Function | (SortablejsEvent) => {...} |
+| `@onChange`   | Function | (SortablejsEvent) => {...} |
+| `@scrollFn`   | Function | (SortablejsEvent) => {...} |
+| `@setData`    | Function | (SortablejsEvent) => {...} |
+| `@onFilter`   | Function | (SortablejsEvent) => {...} |
+| `@onSpill`    | Function | (SortablejsEvent) => {...} |
 
 `SortablejsEvent` - A [`CustomEvent`](https://github.com/SortableJS/Sortable#event-object-demo) provided by SortableJS
 
