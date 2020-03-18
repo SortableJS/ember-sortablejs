@@ -39,7 +39,7 @@ module.exports = {
         'addon/**',
         'addon-test-support/**',
         'app/**',
-        'tests/dummy/app/**'
+        'tests/dummy/app/**',
       ],
       parserOptions: {
         sourceType: 'script'
@@ -52,12 +52,6 @@ module.exports = {
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
         // add your custom rules and overrides for node files here
       })
-    }, { // cypress
-      files: ['cypress/integration/**/*.js'],
-      env: {
-        'cypress/globals': true,
-      },
-      extends: ['plugin:cypress/recommended']
     }
   ]
 };
