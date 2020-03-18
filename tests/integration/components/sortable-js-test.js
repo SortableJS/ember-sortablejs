@@ -192,6 +192,48 @@ module('Integration | Component | sortable-js', function(hooks) {
     assert.deepEqual(listBOrder, expectedListBOrder);
   });
 
+  test('it dynamically sets options', async function(assert) {
+    let options = {
+      animation: 150,
+      ghostClass: 'ghost-class',
+    };
+
+    this.set('options', options);
+
+    // Template block usage:
+    await render(hbs`
+      <SortableJs
+        class="list-group"
+        @items={{this.list}}
+        @options={{options}}
+        as |list|
+      >
+        {{#each list as |item| }}
+          <div data-testid="one" class="list-group-item">{{item.value}}</div>
+        {{/each}}
+      </SortableJs>
+    `);
+
+    const element = find('.list-group');
+    const sortableKey = Object.keys(element).pop();
+    const sortableInstance = element[sortableKey];
+
+    assert.equal(sortableInstance.option('ghostClass'), 'ghost-class');
+    assert.equal(sortableInstance.option('animation'), 150);
+
+    options = {
+      animation: 100,
+      ghostClass: 'foo',
+    };
+
+    this.set('options', options);
+
+    assert.equal(sortableInstance.option('ghostClass'), 'foo');
+    assert.equal(sortableInstance.option('animation'), 100);
+  });
+
+
+
   // test('it reorders a list', async function(assert) {
   //   const done = assert.async();
   //   const onChoose = () => assert.ok(true, 'onChosse was called');
@@ -327,72 +369,6 @@ module('Integration | Component | sortable-js', function(hooks) {
 
   //   assert.equal(aItems.children.length, 5, 'list a has all its elements');
   //   assert.equal(bItems.children.length, 6, 'list b has a cloned item');
-  // });
-
-  // test('it dynamically sets options', async function(assert) {
-  //   let count = 0;
-  //   const done = assert.async();
-  //   const onChoose = () => assert.ok(true, 'onChosse was called');
-  //   const onStart = () => assert.ok(true, 'onStart was called');
-  //   const onMove = () => assert.ok(true, 'onMove was called');
-  //   const onEnd = (event, sortableInstance) => {
-  //     assert.ok(true, 'onEnd was called');
-  //     count += 1;
-  //     if (count === 2) {
-  //       assert.equal(sortableInstance.option('animation'), 100, 'Animation was changed to 100');
-  //       assert.equal(sortableInstance.option('ghostClass'), 'foo', 'Ghost class was changed to foo');
-  //       done();
-  //     }
-  //   }
-
-  //   let options = {
-  //     animation: 150,
-  //     ghostClass: 'ghost-class',
-  //   };
-
-  //   this.set('onChoose', onChoose);
-  //   this.set('onStart', onStart);
-  //   this.set('onMove', onMove);
-  //   this.set('onEnd', onEnd);
-  //   this.set('options', options);
-
-  //   // Template block usage:
-  //   await render(hbs`
-  //     <SortableJs
-  //       class="list-group"
-  //       @options={{options}}
-  //       @onChoose={{action onChoose}}
-  //       @onStart={{action onStart}}
-  //       @onMove={{action onMove}}
-  //       @onEnd={{action onEnd}}
-  //     >
-  //       <div data-testid="one" class="list-group-item">Item 1</div>
-  //       <div data-testid="two" class="list-group-item">Item 2</div>
-  //       <div data-testid="three" class="list-group-item">Item 3</div>
-  //       <div data-testid="four" class="list-group-item">Item 4</div>
-  //       <div data-testid="five" class="list-group-item">Item 5</div>
-  //     </SortableJs>
-  //   `);
-
-  //   const listItemOne = find('div[data-testid="one"]');
-  //   const listItemFour = find('div[data-testid="four"]');
-  //   const listItemTwo = find('div[data-testid="two"]');
-
-  //   await simulateDrag(listItemOne, listItemFour);
-
-  //   const listItems = document.querySelector('.list-group').children;
-  //   assert.equal(listItemOne, listItems[3], 'dragged successful');
-
-  //   options = {
-  //     animation: 100,
-  //     ghostClass: 'foo',
-  //   };
-
-  //   this.set('options', options);
-
-  //   await new Promise((resolve) => setTimeout(() => resolve(), 1000));
-
-  //   await simulateDrag(listItemTwo, listItemOne)
   // });
 
   // test('calls onSpill when dropped outside the sortable regioin', async function(assert) {
