@@ -22,7 +22,6 @@ env:
 branches:
   only:
     - master
-    - managed-list
     # npm version tags
     - /^v\d+\.\d+\.\d+/
 
