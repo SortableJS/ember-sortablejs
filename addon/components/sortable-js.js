@@ -11,6 +11,8 @@ export default class SortableJsComponent extends Component {
 
   @tracked list = [];
 
+  cachedIdentity = new WeakMap();
+
   cachedList = null;
   hasUpdatedList = false; // Used to prevent unwanted renders. Probably there's a better way to do this.
   #sortableContainer = null;
@@ -39,13 +41,21 @@ export default class SortableJsComponent extends Component {
     return this.args.tag || 'div';
   }
 
-  get internalList() {
-    return [...this.list];
-  }
+  // get internalList() {
+  //   return [...this.list];
+  // }
 
   get mappedList() {
-    // fix identity diffing
-    return this.internalList.map((item, i) => ({ id: i += 1, value: item }))
+    console.log('running mappedList')
+    // fix identity diffing for non object primiives
+    return this.list.map((item, i) => ({ id: i + 1, value: item }));
+    // return this.list.map((item) => {
+    //   if (this.cachedIdentity.has(item)) {
+    //     return this.cachedIdentity.get(item);
+    //   }
+
+    //   throw new Error('Identify not present');
+    // });
   }
 
   @action
@@ -76,6 +86,11 @@ export default class SortableJsComponent extends Component {
 
   @action
   setList() {
+    this.args.items?.forEach((item, i) => {
+      if (!this.cachedIdentity.has(item)) {
+        this.cachedIdentity.set(item, { id: i+1, value: item});
+      }
+    });
     this.list = [...(this.args.items || [])];
   }
 
@@ -95,23 +110,25 @@ export default class SortableJsComponent extends Component {
   }
 
   onUpdate(evt) {
+    console.log('onUpdate');
     const {
       newDraggableIndex,
       oldDraggableIndex,
     } = evt;
 
-    this.sync(evt.item, move(this.list, oldDraggableIndex, newDraggableIndex));
+    this.sync(evt, move(this.list, oldDraggableIndex, newDraggableIndex));
     this.hasUpdatedList = true;
     this.args?.onUpdate?.(evt);
   }
 
   onRemove(evt) {
+    console.log('onRemove');
     const {
       oldDraggableIndex,
     } = evt;
 
     if (evt.pullMode !== 'clone') {
-      this.sync(evt.item, removeFrom(this.list, oldDraggableIndex));
+      this.sync(evt, removeFrom(this.list, oldDraggableIndex));
       this.hasUpdatedList = true;
     }
 
@@ -119,6 +136,8 @@ export default class SortableJsComponent extends Component {
   }
 
   onAdd(evt) {
+    console.log('onAdd');
+    // evt.item.remove();
     this.cachedList = [...this.list];
     this.dragStore.dragAddInstance = this;
     const {
@@ -127,27 +146,37 @@ export default class SortableJsComponent extends Component {
     } = evt;
     const oldItem = this.dragStore.dragStartInstance.list[oldDraggableIndex];
 
-    this.sync(evt.item, insertAt(this.list, newDraggableIndex, oldItem));
+    this.sync(evt, insertAt(this.list, newDraggableIndex, oldItem));
     this.args?.onAdd?.(evt);
   }
 
   onStart(evt) {
+    console.log('onStart');
     this.cachedList = [...this.list];
     this.dragStore.dragStartInstance = this;
     this.args?.onStart?.(evt);
   }
 
-  onEnd(evt, ) {
+  onEnd(evt) {
+    console.log('onEnd');
     if (!this.hasUpdatedList) {
-      this.sync(evt.item, this.list);
+      evt.item.remove();
+      this.list = this.list.map((item, i) => {
+        const newIdentity = { id: i +1, value: item };
+        this.cachedIdentity.set(item, newIdentity);
+        return newIdentity;
+      });
+      console.log('on end new list')
+
+      // this.sync(evt, this.list);
     }
 
     this.args?.onEnd?.(evt, this.cancelDnD);
     this.hasUpdatedList = false;
   }
 
-  sync(element, changedArray) {
-    element.remove();
+  sync({ item }, changedArray) {
+    item.remove();
     this.list = [...changedArray];
   }
 
