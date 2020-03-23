@@ -39,7 +39,7 @@ Usage
 ------------------------------------------------------------------------------
 
 ```hbs
-{{!-- this.list = [{..}, {...},..]  --}}
+{{!-- this.list = [{ name: 'item one' }, { name: 'item two' },..]  --}}
 <SortableJs
   @items={{this.list}}
   @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
@@ -48,7 +48,7 @@ Usage
   as |list|
 >
   {{#each list as |item|}}
-    <div class="list-group-item bg-yellow">{{item.value}}</div>
+    <div class="list-group-item bg-yellow">{{item.value.name}}</div>
   {{/each}}
 </SortableJs>
 ```
@@ -133,7 +133,7 @@ v1
 
 v2
 ```hbs
-{{!-- this.list = [{..}, {...},..]  --}}
+{{!-- this.list = [{ name: 'item one' }, { name: 'item two' },..]  --}}
 <SortableJs
   class="list-group"
   @items={{this.list}}
@@ -141,7 +141,7 @@ v2
   as |list|
 >
   {{#each list as |item|}}
-    <div class="list-group-item">{{item.value}}</div>
+    <div class="list-group-item">{{item.value.name}}</div>
   {{/each}}
 </SortableJs>
 ```
