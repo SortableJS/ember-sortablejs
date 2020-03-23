@@ -30,7 +30,7 @@ Library support
 Currently supported:
 - [x] Drag from one list to another
 - [x] Sort
-- [x] Clone
+- [ ] Clone
 - [ ] Swap
 - [ ] Multi Drag
 - [ ] Nested List
@@ -39,29 +39,35 @@ Usage
 ------------------------------------------------------------------------------
 
 ```hbs
+{{!-- this.list = [{ name: 'item one' }, { name: 'item two' },..]  --}}
 <SortableJs
-  @items={{array "one" "two" "three" "four" "five"}}
+  @items={{this.list}}
   @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
   @onStart={{this.onStart}}
   @onEnd={{this.onEnd}}
   as |list|
 >
   {{#each list as |item|}}
-    <div class="list-group-item bg-yellow">{{item.value}}</div>
+    <div class="list-group-item bg-yellow">{{item.value.name}}</div>
   {{/each}}
 </SortableJs>
 ```
 
 How it works
 ------------------------------------------------------------------------------
-SortableJs works by manipulating the DOM directly this is very compatible with
-the Glimmer VM. To mitigate this we need tu use SortableJs as a middle and use
-the events it emits to update state and prevent the DOM manipulation the lib does.
+SortableJs works by manipulating the DOM directly this is NOT compatible with
+the Glimmer VM. To mitigate this we need tu use SortableJs as a middle man and use
+the events it emits to update state and prevent the DOM manipulation the library does.
 
 This is accomplished by maintaining an internal list. This list is a copy of the
 array supplied via `@items`. The events `onStart`, `onEnd`, `onUpdate`, `onAdd`,
 `onRemove` are intercepted to prevent DOM manipulation and maintaining the internal
 list.
+
+You HAVE to provide an object. As the addon uses a WeakMap to cache the items supplied.
+When SortableJs emits we update the list and the cache to make changes that will update
+the DOM. The addon will ***yield*** an array of objects. Each object contains the key `value`,
+which is the original object supplied via `@items`.
 
 I you have ideas on how to approach this better. Please open an issue 😄
 
@@ -78,30 +84,32 @@ Component API
 ------------------------------------------------------------------------------
 |arg|type|description|
 |:---|:---:|:---|
-| `@items`      | Array    | A list of the items to be managed by the addon |
-| `@options`    | Object   | A hash options supported by SortableJs|
-| `@tag`        | String   | The element to be used to render the list (default: "div")|
-| `@onChoose`   | Function | (SortablejsEvent) => {...} |
-| `@onUnchoose` | Function | (SortablejsEvent) => {...} |
-| `@onStart`    | Function | (SortablejsEvent) => {...} |
-| `@onEnd`      | Function | (SortablejsEvent, cancelDnD) => {...} |
-| `@onAdd`      | Function | (SortablejsEvent) => {...} |
-| `@onUpdate`   | Function | (SortablejsEvent) => {...} |
-| `@onSort`     | Function | (SortablejsEvent) => {...} |
-| `@onRemove`   | Function | (SortablejsEvent) => {...} |
-| `@onMove`     | Function | (SortablejsMoveEvent) => {...} |
-| `@onClone`    | Function | (SortablejsEvent) => {...} |
-| `@onChange`   | Function | (SortablejsEvent) => {...} |
-| `@scrollFn`   | Function | (SortablejsEvent) => {...} |
-| `@setData`    | Function | (SortablejsEvent) => {...} |
-| `@onFilter`   | Function | (SortablejsEvent) => {...} |
-| `@onSpill`    | Function | (SortablejsEvent) => {...} |
+| `@items`      | Array<Object> | A list of objecs to be managed by the addon |
+| `@options`    | Object        | A hash options supported by SortableJs|
+| `@tag`        | String        | The element to be used to render the list (default: "div")|
+| `@onChoose`   | Function      | (SortablejsEvent) => {...} |
+| `@onUnchoose` | Function      | (SortablejsEvent) => {...} |
+| `@onStart`    | Function      | (SortablejsEvent) => {...} |
+| `@onEnd`      | Function      | (SortablejsEvent, cancelDnD) => {...} |
+| `@onAdd`      | Function      | (SortablejsEvent) => {...} |
+| `@onUpdate`   | Function      | (SortablejsEvent) => {...} |
+| `@onSort`     | Function      | (SortablejsEvent) => {...} |
+| `@onRemove`   | Function      | (SortablejsEvent) => {...} |
+| `@onMove`     | Function      | (SortablejsMoveEvent) => {...} |
+| `@onClone`    | Function      | (SortablejsEvent) => {...} |
+| `@onChange`   | Function      | (SortablejsEvent) => {...} |
+| `@scrollFn`   | Function      | (SortablejsEvent) => {...} |
+| `@setData`    | Function      | (SortablejsEvent) => {...} |
+| `@onFilter`   | Function      | (SortablejsEvent) => {...} |
+| `@onSpill`    | Function      | (SortablejsEvent) => {...} |
 
 `SortablejsEvent` - A [`CustomEvent`](https://github.com/SortableJS/Sortable#event-object-demo) provided by SortableJS
 
 `SortablejsMoveEvent` - A [`CustomEvent`](https://github.com/SortableJS/Sortable#move-event-object) provided by SortableJS
 
 `cancelDnD` - A callback provided by the ember addon to basically undo you last drag and drop or sort;
+
+`{{yield}}` - An array of objects with the key `value` where its value is the object supplied. `{ value: <Object> }`
 
 Migrating from 1.x
 ------------------------------------------------------------------------------
@@ -125,14 +133,15 @@ v1
 
 v2
 ```hbs
+{{!-- this.list = [{ name: 'item one' }, { name: 'item two' },..]  --}}
 <SortableJs
   class="list-group"
-  @items={{array "Item 1" "Item 2" "Item 3" "Item 4" "Item 5"}}
+  @items={{this.list}}
   @options={{hash animation=150 ghostClass="ghost-class" group="shared-list"}}
   as |list|
 >
   {{#each list as |item|}}
-    <div class="list-group-item">Item 1</div>
+    <div class="list-group-item">{{item.value.name}}</div>
   {{/each}}
 </SortableJs>
 ```

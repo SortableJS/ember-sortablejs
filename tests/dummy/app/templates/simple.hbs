@@ -8,7 +8,7 @@
   <div class="col">
     <SortableJs
       class="list-group"
-      @items={{array "one" "two" "three" "four" "five"}}
+      @items={{this.list}}
       @options={{hash animation=150 ghostClass="ghost-class"}}
       @onChoose={{this.onChoose}}
       @onUnchoose={{this.onUnchoose}}
@@ -23,7 +23,7 @@
       as |list|
     >
       {{#each list as |item index| }}
-        <div data-list-item={{index}} class="list-group-item">{{item.value}}</div>
+        <div data-list-item={{index}} class="list-group-item">{{item.value.title}}</div>
       {{/each}}
     </SortableJs>
   </div>

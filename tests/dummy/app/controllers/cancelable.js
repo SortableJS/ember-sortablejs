@@ -3,14 +3,18 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 class Employee {
-  @tracked id;
+  @tracked sort;
   @tracked name;
   @tracked type;
+  @tracked img;
+  id;
 
-  constructor(id, { name, type }) {
+  constructor(sort, { name, type, id, img}) {
     this.id = id;
+    this.sort = sort;
     this.name = name;
     this.type = type;
+    this.img = img;
   }
 }
 
@@ -24,12 +28,12 @@ export default class CancelableController extends Controller {
     super(...arguments);
     setTimeout(() => {
       const all = [
-        { name: 'Luis', type: 'dev' },
-        { name: 'Jaden', type: 'dev' },
-        { name: 'Gustavo', type: 'dev' },
-        { name: 'Lance', type: 'pm' },
-        { name: 'Britni', type: 'pm' },
-        { name: 'Kelly', type: 'pm' }
+        { id: 1, name: 'Luis', type: 'dev', img: 'https://api.adorable.io/avatars/25/luis' },
+        { id: 2, name: 'Jaden', type: 'dev', img: 'https://api.adorable.io/avatars/25/jaden' },
+        { id: 3, name: 'Gustavo', type: 'dev', img: 'https://api.adorable.io/avatars/25/gustavo' },
+        { id: 4 ,name: 'Lance', type: 'pm', img: 'https://api.adorable.io/avatars/25/lance' },
+        { id: 5, name: 'Britni', type: 'pm', img: 'https://api.adorable.io/avatars/25/britni' },
+        { id: 6, name: 'Kelly', type: 'pm', img: 'https://api.adorable.io/avatars/25/kelly' }
       ];
       this.list = all.map((person, i) => new Employee(i += 1, person));
     }, 5000);

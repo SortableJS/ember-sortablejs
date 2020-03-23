@@ -1,6 +1,14 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
 export default class SimpleController extends Controller {
+  @tracked list = [
+    { title: 'one' },
+    { title: 'two' },
+    { title: 'three' },
+    { title: 'four' },
+    { title: 'five' },
+  ];
   onChoose() {
     console.log('*** Action *** - onChoose');
   }
