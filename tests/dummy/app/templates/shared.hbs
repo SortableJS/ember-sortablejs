@@ -16,8 +16,8 @@
       @onSort={{fn this.onSort 'A'}}
       as |list|
     >
-      {{#each list as |item| }}
-        <div data-record-id={{item.value.id}} class="list-group-item">
+      {{#each list as |item index| }}
+        <div data-list-item={{index}} data-record-id={{item.value.id}} class="list-group-item">
           <img class="float-left rounded" src={{item.value.img}} alt={{item.value.name}}>
           {{item.value.name}}
         </div>
@@ -35,8 +35,8 @@
       @onSort={{fn this.onSort 'B'}}
       as |list|
     >
-      {{#each list as |item|}}
-        <div data-record-id={{item.value.id}} class="list-group-item bg-yellow">
+      {{#each list as |item index|}}
+        <div data-list-item={{index}} data-record-id={{item.value.id}} class="list-group-item bg-yellow">
           <img class="float-left rounded" src={{item.value.img}} alt={{item.value.name}}>
           {{item.value.name}}
         </div>
