@@ -42,17 +42,7 @@ export default class SortableJsComponent extends Component {
   }
 
   get mappedList() {
-    console.log('running mappedList')
     return this.list.map((item) => this.cachedIdentity.get(item));
-    // fix identity diffing for non object primiives
-    // return this.list.map((item, i) => ({ id: i + 1, value: item }));
-    // return this.list.map((item) => {
-    //   if (this.cachedIdentity.has(item)) {
-    //     return this.cachedIdentity.get(item);
-    //   }
-
-    //   throw new Error('Identify not present');
-    // });
   }
 
   @action
