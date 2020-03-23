@@ -106,6 +106,7 @@ export default class SortableJsComponent extends Component {
   }
 
   willDestroy() {
+    if (this.isDestroying || this.isDestroyed) return;
     this.sortableInstance.destroy();
     this.dragStore.reset();
   }

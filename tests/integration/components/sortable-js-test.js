@@ -9,11 +9,11 @@ module('Integration | Component | sortable-js', function(hooks) {
 
   hooks.before(function() {
     this.list = [
-      'item one',
-      'item two',
-      'item three',
-      'item four',
-      'item five',
+      { title: 'item one' },
+      { title: 'item two' },
+      { title: 'item three' },
+      { title: 'item four' },
+      { title: 'item five' },
     ];
   });
 
@@ -42,7 +42,7 @@ module('Integration | Component | sortable-js', function(hooks) {
         as |list|
       >
         {{#each list as |item| }}
-          <div class="list-item">{{item}}</div>
+          <div class="list-item">{{item.value.title}}</div>
         {{/each}}
       </SortableJs>
     `);
@@ -96,7 +96,7 @@ module('Integration | Component | sortable-js', function(hooks) {
         as |list|
       >
         {{#each list as |item index| }}
-          <div data-list-item={{index}} class="list-item">{{item.value}}</div>
+          <div data-list-item={{index}} class="list-item">{{item.value.title}}</div>
         {{/each}}
       </SortableJs>
     `);
@@ -148,7 +148,7 @@ module('Integration | Component | sortable-js', function(hooks) {
         as |list|
       >
         {{#each list as |item index| }}
-          <div data-list-item={{index}} class="list-item">{{item.value}}</div>
+          <div data-list-item={{index}} class="list-item">{{item.value.title}}</div>
         {{/each}}
       </SortableJs>
       <br>
@@ -160,7 +160,7 @@ module('Integration | Component | sortable-js', function(hooks) {
         as |list|
       >
         {{#each list as |item index| }}
-          <div data-list-item={{index}} class="list-item">{{item.value}}</div>
+          <div data-list-item={{index}} class="list-item">{{item.value.title}}</div>
         {{/each}}
       </SortableJs>
     `);
@@ -209,7 +209,7 @@ module('Integration | Component | sortable-js', function(hooks) {
         as |list|
       >
         {{#each list as |item| }}
-          <div data-testid="one" class="list-group-item">{{item.value}}</div>
+          <div data-testid="one" class="list-group-item">{{item.value.title}}</div>
         {{/each}}
       </SortableJs>
     `);
