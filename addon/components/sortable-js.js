@@ -79,7 +79,7 @@ export default class SortableJsComponent extends Component {
       if (!isObject) throw new TypeError('Item is not an Object');
 
       if (!this.cachedIdentity.has(item)) {
-        this.cachedIdentity.set(item, { value: item });
+        this.setIdentity(item);
       }
     });
     this.list = [...(this.args.items || [])];
@@ -107,8 +107,7 @@ export default class SortableJsComponent extends Component {
       oldIndex,
     } = evt;
 
-    [this.list[oldIndex], this.list[newIndex]]
-      .forEach((item) => this.cachedIdentity.set(item, { value: item}));
+    [this.list[oldIndex], this.list[newIndex]].forEach((item) => this.setIdentity(item));
 
     this.sync(evt, move(this.list, oldIndex, newIndex));
     this.hasUpdatedList = true;
@@ -139,7 +138,7 @@ export default class SortableJsComponent extends Component {
 
     const oldItem = this.dragStore.dragStartInstance.list[oldIndex];
 
-    this.cachedIdentity.set(oldItem, { value: oldItem });
+    this.setIdentity(oldItem);
 
     this.sync(evt, insertAt(this.list, newIndex, oldItem));
     this.args?.onAdd?.(evt);
@@ -155,8 +154,7 @@ export default class SortableJsComponent extends Component {
     if (!this.hasUpdatedList) {
       evt.item.remove();
       this.list = this.list.map((item) => {
-        const newIdentity = { value: item };
-        this.cachedIdentity.set(item, newIdentity);
+        this.setIdentity(item);
         return item;
       });
 
@@ -165,6 +163,12 @@ export default class SortableJsComponent extends Component {
 
     this.args?.onEnd?.(evt, this.cancelDnD);
     this.hasUpdatedList = false;
+  }
+
+  setIdentity(obj) {
+    if (obj && (typeof obj === 'object')) {
+      this.cachedIdentity.set(obj, { value: obj });
+    }
   }
 
   sync({ item }, changedArray) {
